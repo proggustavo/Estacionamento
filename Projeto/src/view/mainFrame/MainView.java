@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
 import view.panels.CaixaView;
+import view.panels.ClientView;
 import view.panels.InicioView;
 
 public class MainView extends JFrame {
@@ -37,6 +38,11 @@ public class MainView extends JFrame {
 	}
 
 	private JLayeredPane layeredPane;
+	private JMenuBar menuBar;
+	private JButton btnInicio;
+	private JButton btnCaixa;
+	private JButton btnClientes;
+	private JButton btnTicketPerdido;
 
 	public MainView() {
 		
@@ -59,48 +65,54 @@ public class MainView extends JFrame {
 
 	private void initialize() {
 
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		menuBar.setBackground(Color.WHITE);
 		setJMenuBar(menuBar);
 		
-		JButton btnInicio = new JButton("INICIO");
+		btnInicio = new JButton("INICIO");
 		btnInicio.setIcon(new ImageIcon(MainView.class.getResource("/img/icons8-fita-de-bookmark-50.png")));
 		btnInicio.setFont(new Font("Arial", Font.BOLD, 16));
 		btnInicio.setBackground(Color.WHITE);
 		btnInicio.setBorder(null);
+		menuBar.add(btnInicio);
 		btnInicio.addActionListener(e -> {
 			
 			InicioView panelInicio = new InicioView();
 			swithPanel(panelInicio);
 			
 		});
-		menuBar.add(btnInicio);
 		
 		Component strut1 = Box.createHorizontalStrut(20);
 		menuBar.add(strut1);
 		
-		JButton btnCaixa = new JButton("CAIXA");
+		btnCaixa = new JButton("CAIXA");
 		btnCaixa.setIcon(new ImageIcon(MainView.class.getResource("/img/icons8-caixa-registradora-50.png")));
 		btnCaixa.setFont(new Font("Arial", Font.BOLD, 16));
 		btnCaixa.setBackground(Color.WHITE);
 		btnCaixa.setBorder(null);
+		menuBar.add(btnCaixa);
 		btnCaixa.addActionListener(e -> {
 			
 			CaixaView caixaPanel = new CaixaView();
 			swithPanel(caixaPanel);
 			
 		});
-		menuBar.add(btnCaixa);
 		
 		Component strut2 = Box.createHorizontalStrut(20);
 		menuBar.add(strut2);
 		
-		JButton btnClientes = new JButton("CLIENTES");
+		btnClientes = new JButton("CLIENTES");
 		btnClientes.setIcon(new ImageIcon(MainView.class.getResource("/img/icons8-gestão-de-cliente-50.png")));
 		btnClientes.setFont(new Font("Arial", Font.BOLD, 16));
 		btnClientes.setBackground(Color.WHITE);
 		btnClientes.setBorder(null);
 		menuBar.add(btnClientes);
+		btnClientes.addActionListener(e -> {
+			
+			ClientView clienteView = new ClientView();
+			swithPanel(clienteView);
+			
+		});
 		
 		Component strut3 = Box.createHorizontalStrut(20);
 		menuBar.add(strut3);
@@ -115,7 +127,7 @@ public class MainView extends JFrame {
 		Component strut4 = Box.createHorizontalStrut(20);
 		menuBar.add(strut4);
 		
-		JButton btnTicketPerdido = new JButton("TICKET PERDIDO");
+		btnTicketPerdido = new JButton("TICKET PERDIDO");
 		btnTicketPerdido.setIcon(new ImageIcon(MainView.class.getResource("/img/icons8-busca-50.png")));
 		btnTicketPerdido.setFont(new Font("Arial", Font.BOLD, 16));
 		btnTicketPerdido.setBackground(Color.WHITE);
@@ -129,8 +141,8 @@ public class MainView extends JFrame {
 		
 		layeredPane.removeAll();
 		panel.setBorder(null);
-		panel.setBackground(Color.WHITE);
 		panel.repaint();
+		panel.revalidate();
 		layeredPane.add(panel, "grow");
 		layeredPane.repaint();
 		layeredPane.revalidate();

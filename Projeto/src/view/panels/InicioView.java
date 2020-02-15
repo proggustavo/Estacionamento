@@ -24,6 +24,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
+import util.Modificacoes;
 
 public class InicioView extends JPanel {
 
@@ -44,6 +45,7 @@ public class InicioView extends JPanel {
 	private JTextField txtTicket;
 	private JTextField txtProcurar;
 	private Component lblTotalDeVeiculos;
+	private Modificacoes modificacao = new Modificacoes();
 
 	
 	public InicioView() {
@@ -101,11 +103,30 @@ public class InicioView extends JPanel {
 		
 		txtProcurar = new JTextField();
 		txtProcurar.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		txtProcurar.setText("Procurar... (F6)");
-		txtProcurar.setFocusAccelerator((char) KeyEvent.VK_F6);
+		txtProcurar.setText("Pesquisar... (F6)");
 		txtProcurar.setFont(new Font("Arial", Font.BOLD, 16));
+//		modificacao.txtConfig(txtProcurar, "Procurar... (F6)", new Font("Arial", Font.BOLD, 16),
+//		Color.WHITE, Color.BLACK, new LineBorder(new Color(0, 0, 0), 1, true));
+		txtProcurar.setFocusAccelerator((char) KeyEvent.VK_F6);
 		txtProcurar.setColumns(10);
 		splitPane.setRightComponent(txtProcurar);
+		txtProcurar.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (txtProcurar.getText().trim().toLowerCase().equals("pesquisar... (f6)")) {
+					txtProcurar.setText("");
+				}
+				txtProcurar.setForeground(Color.BLACK);
+			}
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (txtProcurar.getText().trim().toLowerCase().equals("")) {
+					txtProcurar.setText("Pesquisar... (F6)");
+				}
+				txtProcurar.setForeground(Color.BLACK);
+			}
+		});
 		
 		txtTicket = new JTextField("Digite o Número do Ticket");
 		txtTicket.setFont(new Font("Arial", Font.BOLD, 26));
@@ -189,30 +210,17 @@ public class InicioView extends JPanel {
 		btnProcurar.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		btnProcurar.setBackground(new Color(100, 149, 237));
 		splitPane.setLeftComponent(btnProcurar);
-		txtProcurar.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				if (txtProcurar.getText().trim().toLowerCase().equals("procurar... (f6)")) {
-					txtProcurar.setText("");
-				}
-				txtProcurar.setForeground(Color.BLACK);
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (txtProcurar.getText().trim().toLowerCase().equals("")) {
-					txtProcurar.setText("Procurar... (F6)");
-				}
-				txtProcurar.setForeground(Color.BLACK);
-			}
+		btnProcurar.addActionListener(e -> {
+			
+			
 		});
 		
 		String[] colunmName = { "Número", "Placa", "Cliente", "Entrada", "Remover", "Imprimir" };
 		Object[][] data = {};
 		
+		
 		table = new JTable(new DefaultTableModel(data, colunmName));
-		table.setBackground(Color.WHITE);
-		table.getTableHeader().setBackground(Color.WHITE);
+		modificacao.tabelaConfig(table);
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(table);
