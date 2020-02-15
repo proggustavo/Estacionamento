@@ -19,7 +19,9 @@ import javax.swing.JTable;
 public class CaixaView extends JPanel {
 
 	private static final long serialVersionUID = -4789193934965387787L;
+	private Modificacoes modificacao = new Modificacoes();
 	private JTable table;
+	private JScrollPane scrollPane;
 
 	public CaixaView() {
 		setFont(new Font("Arial", Font.BOLD, 16));
@@ -99,7 +101,7 @@ public class CaixaView extends JPanel {
 			
 		});
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBackground(Color.WHITE);
 		scrollPane.getViewport().setBackground(Color.WHITE);
 		scrollPane.setBorder(null);
@@ -108,9 +110,8 @@ public class CaixaView extends JPanel {
 		String[] colunmName = {"#", "Descrição", "Forma de Pagamento", "Valor", "Imprimir"};
 		Object[][] data = {};
 		
-		Modificacoes mod = new Modificacoes();
-		table = new JTable(new DefaultTableModel(data, colunmName));
-		mod.tabelaConfig(table);
+		DefaultTableModel model = new DefaultTableModel(data, colunmName);
+		modificacao.tabelaConfig(table, model);
 		scrollPane.setViewportView(table);
 		
 	}

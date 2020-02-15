@@ -215,18 +215,18 @@ public class InicioView extends JPanel {
 			
 		});
 		
-		String[] colunmName = { "Número", "Placa", "Cliente", "Entrada", "Remover", "Imprimir" };
-		Object[][] data = {};
-		
-		
-		table = new JTable(new DefaultTableModel(data, colunmName));
-		modificacao.tabelaConfig(table);
-		
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(table);
 		scrollPane.getViewport().setBackground(Color.WHITE);
 		scrollPane.setBorder(null);
 		add(scrollPane, "cell 4 3 11 14,grow");
+		
+		String[] colunmName = { "Número", "Placa", "Cliente", "Entrada", "Remover", "Imprimir" };
+		Object[][] data = {};
+		
+		DefaultTableModel model = new DefaultTableModel(data, colunmName);
+		table = new JTable(new DefaultTableModel(data, colunmName));
+		modificacao.tabelaConfig(table, model);
 		
 	}
 }

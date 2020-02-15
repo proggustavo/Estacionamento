@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
 import view.panels.CaixaView;
-import view.panels.ClientView;
 import view.panels.InicioView;
 
 public class MainView extends JFrame {
@@ -109,8 +108,6 @@ public class MainView extends JFrame {
 		menuBar.add(btnClientes);
 		btnClientes.addActionListener(e -> {
 			
-			ClientView clienteView = new ClientView();
-			swithPanel(clienteView);
 			
 		});
 		

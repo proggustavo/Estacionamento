@@ -9,6 +9,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 
 public class Modificacoes {
 	
@@ -41,7 +42,7 @@ public class Modificacoes {
 		return button;
 	}
 	
-	public JTable tabelaConfig(JTable table) {
+	public JTable tabelaConfig(JTable table, DefaultTableModel model) {
 		
 		table.setBackground(Color.WHITE);
 		table.setForeground(Color.BLACK);
