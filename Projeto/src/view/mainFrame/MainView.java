@@ -16,7 +16,10 @@ import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
 import view.panels.CaixaView;
+import view.panels.ClienteView;
 import view.panels.InicioView;
+import view.panels.MovimentoView;
+import view.panels.TicketPerdidoView;
 
 public class MainView extends JFrame {
 
@@ -42,6 +45,7 @@ public class MainView extends JFrame {
 	private JButton btnCaixa;
 	private JButton btnClientes;
 	private JButton btnTicketPerdido;
+	private JButton btnMovimento;
 
 	public MainView() {
 		
@@ -53,8 +57,8 @@ public class MainView extends JFrame {
 		this.getContentPane().setLayout(new MigLayout("", "[grow]", "[grow]"));
 		
 		layeredPane = new JLayeredPane();
-		this.getContentPane().add(layeredPane, "cell 0 0,grow");
 		layeredPane.setLayout(new MigLayout("", "[grow]", "[grow]"));
+		this.getContentPane().add(layeredPane, "cell 0 0,grow");
 		InicioView inicioView = new InicioView();
 		inicioView.setBorder(null);
 		layeredPane.add(inicioView, "grow");
@@ -108,18 +112,26 @@ public class MainView extends JFrame {
 		menuBar.add(btnClientes);
 		btnClientes.addActionListener(e -> {
 			
+			ClienteView clienteView = new ClienteView();
+			swithPanel(clienteView);
 			
 		});
 		
 		Component strut3 = Box.createHorizontalStrut(20);
 		menuBar.add(strut3);
 		
-		JButton btnMovimento = new JButton("MOVIMENTO");
+		btnMovimento = new JButton("MOVIMENTO");
 		btnMovimento.setIcon(new ImageIcon(MainView.class.getResource("/img/icons8-lista-50.png")));
 		btnMovimento.setFont(new Font("Arial", Font.BOLD, 16));
 		btnMovimento.setBackground(Color.WHITE);
 		btnMovimento.setBorder(null);
 		menuBar.add(btnMovimento);
+		btnMovimento.addActionListener(e -> {
+			
+			MovimentoView movimentoView = new MovimentoView();
+			swithPanel(movimentoView);
+			
+		});
 		
 		Component strut4 = Box.createHorizontalStrut(20);
 		menuBar.add(strut4);
@@ -130,14 +142,19 @@ public class MainView extends JFrame {
 		btnTicketPerdido.setBackground(Color.WHITE);
 		btnTicketPerdido.setBorder(null);
 		menuBar.add(btnTicketPerdido);
-		
-		
+		btnTicketPerdido.addActionListener(e -> {
+			
+			TicketPerdidoView ticketPerdidoView = new TicketPerdidoView();
+			swithPanel(ticketPerdidoView);
+			
+		});
 	}
 	
 	private void swithPanel(JPanel panel) {
 		
 		layeredPane.removeAll();
 		panel.setBorder(null);
+		panel.setBackground(Color.WHITE);
 		panel.repaint();
 		panel.revalidate();
 		layeredPane.add(panel, "grow");
@@ -145,5 +162,4 @@ public class MainView extends JFrame {
 		layeredPane.revalidate();
 		
 	}
-
 }

@@ -20,15 +20,14 @@ public class CaixaView extends JPanel {
 
 	private static final long serialVersionUID = -4789193934965387787L;
 	private Modificacoes modificacao = new Modificacoes();
+	
 	private JTable table;
 	private JScrollPane scrollPane;
 
 	public CaixaView() {
-		setFont(new Font("Arial", Font.BOLD, 16));
 		
 		this.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		this.setBounds(100, 100, 886, 658);
-		this.setBackground(Color.WHITE);
 		this.setLayout(new MigLayout("", "[10px][grow][grow][grow][grow][grow][grow][grow][grow][5px][grow][grow][5px][grow][grow][5px][grow][grow][10px]", "[10px][80px][20px][35px][20px][grow][grow][grow][grow][grow][grow][grow][10px]"));
 		
 		this.initialize();
@@ -111,7 +110,8 @@ public class CaixaView extends JPanel {
 		Object[][] data = {};
 		
 		DefaultTableModel model = new DefaultTableModel(data, colunmName);
-		modificacao.tabelaConfig(table, model);
+		table = new JTable(model);
+		modificacao.tabelaConfig(table);
 		scrollPane.setViewportView(table);
 		
 	}

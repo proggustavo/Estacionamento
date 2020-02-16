@@ -31,6 +31,7 @@ public class InicioView extends JPanel {
 	private static final long serialVersionUID = -8394009250133780042L;
 	private static final String DINHEIRO = "1 - DINHEIRO";
 	private static final String CARTAO = "2 - CARTÃO";
+	private Modificacoes modificacao = new Modificacoes();
 
 	private JComboBox<Object> comboBox;
 	private ArrayList<String> tiposPagamento;
@@ -44,15 +45,13 @@ public class InicioView extends JPanel {
 	private JButton btnImprimirComprovante;
 	private JTextField txtTicket;
 	private JTextField txtProcurar;
-	private Component lblTotalDeVeiculos;
-	private Modificacoes modificacao = new Modificacoes();
-
+	private JLabel lblTotalDeVeiculos;
 	
 	public InicioView() {
 		
-		this.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		this.setBackground(Color.WHITE);
 		this.setBounds(100, 100, 1122, 789);
+		this.setBackground(Color.WHITE);
+		this.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		this.setLayout(new MigLayout("", "[10px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][10px]", "[10px][grow][grow][grow][grow][grow][grow][grow][20px][grow][grow][grow][grow][grow][grow][grow][grow][10px]"));
 		
 		
@@ -174,8 +173,9 @@ public class InicioView extends JPanel {
 		add(btnValidar, "cell 2 6,grow");
 		btnValidar.addActionListener(e -> {
 			
-			
-			
+			String mensagem = "TESTE 123456789";
+//			JOptionPane.showMessageDialog(this, modificacao.labelConfig(lblMensagem, mensagem),"VALIDAÇÃO", JOptionPane.WARNING_MESSAGE);
+			modificacao.joptionConfig(1, this, mensagem, "VALIDAÇÃO", Modificacoes.JOPTION_ATENCAO, Modificacoes.JOPTION_K_C, null, null);
 			
 		});
 		
@@ -197,8 +197,6 @@ public class InicioView extends JPanel {
 		btnImprimirComprovante.setFont(new Font("Arial", Font.BOLD, 16));
 		add(btnImprimirComprovante, "cell 1 10 2 1,grow");
 		btnImprimirComprovante.addActionListener(e -> {
-			
-			
 			
 			
 			
@@ -225,8 +223,9 @@ public class InicioView extends JPanel {
 		Object[][] data = {};
 		
 		DefaultTableModel model = new DefaultTableModel(data, colunmName);
-		table = new JTable(new DefaultTableModel(data, colunmName));
-		modificacao.tabelaConfig(table, model);
+		table = new JTable(model);
+		modificacao.tabelaConfig(table);
+		scrollPane.setViewportView(table);
 		
 	}
 }
