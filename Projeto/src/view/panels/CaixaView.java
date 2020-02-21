@@ -10,7 +10,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
-import util.Modificacoes;
+import util.modifications.Modificacoes;
 
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
@@ -48,13 +48,7 @@ public class CaixaView extends JPanel {
 		lblSaldoEmDinheiror.setFont(new Font("Arial", Font.BOLD, 14));
 		lblSaldoEmDinheiror.setForeground(Color.BLACK);
 		lblSaldoEmDinheiror.setBackground(Color.WHITE);
-		add(lblSaldoEmDinheiror, "cell 13 3,grow");
-		
-		JLabel lblSaldoEmCarto = new JLabel("Saldo em Cartão:");
-		lblSaldoEmCarto.setFont(new Font("Arial", Font.BOLD, 14));
-		lblSaldoEmCarto.setForeground(Color.BLACK);
-		lblSaldoEmCarto.setBackground(Color.WHITE);
-		add(lblSaldoEmCarto, "cell 16 3 2 1,grow");
+		add(lblSaldoEmDinheiror, "cell 10 3 2 1,grow");
 		
 		JButton btnRelatorio = new JButton("<html><body>Relatorio do<br align=Center>Último Caixa</body></html>");
 		btnRelatorio.setIcon(new ImageIcon(CaixaView.class.getResource("/img/icons8-enviar-para-a-impressora-50.png")));
@@ -103,10 +97,22 @@ public class CaixaView extends JPanel {
 		scrollPane = new JScrollPane();
 		scrollPane.setBackground(Color.WHITE);
 		scrollPane.getViewport().setBackground(Color.WHITE);
+		
+		JLabel lblSaldoEmCarto = new JLabel("Saldo em Cartão:");
+		lblSaldoEmCarto.setFont(new Font("Arial", Font.BOLD, 14));
+		lblSaldoEmCarto.setForeground(Color.BLACK);
+		lblSaldoEmCarto.setBackground(Color.WHITE);
+		add(lblSaldoEmCarto, "cell 13 3 2 1,grow");
+		
+		JLabel lblTotalCaixa = new JLabel("Total(R$):");
+		lblTotalCaixa.setForeground(Color.BLACK);
+		lblTotalCaixa.setFont(new Font("Arial", Font.BOLD, 14));
+		lblTotalCaixa.setBackground(Color.WHITE);
+		add(lblTotalCaixa, "cell 16 3 2 1,grow");
 		scrollPane.setBorder(null);
 		add(scrollPane, "cell 1 5 17 7,grow");
 		
-		String[] colunmName = {"#", "Descrição", "Forma de Pagamento", "Valor", "Imprimir"};
+		String[] colunmName = {"#", "Ticket / Cartão", "Descrição", "Forma de Pagamento", "Valor", "Imprimir"};
 		Object[][] data = {};
 		
 		DefaultTableModel model = new DefaultTableModel(data, colunmName);

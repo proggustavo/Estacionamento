@@ -150,7 +150,7 @@ public class MainView extends JFrame {
 		});
 	}
 	
-	private void swithPanel(JPanel panel) {
+	public void swithPanel(JPanel panel) {
 		
 		layeredPane.removeAll();
 		panel.setBorder(null);
@@ -162,4 +162,14 @@ public class MainView extends JFrame {
 		layeredPane.revalidate();
 		
 	}
+
+	public JLayeredPane getLayeredPane() {
+		return layeredPane;
+	}
+
+	public void setLayeredPane(JLayeredPane layeredPane) {
+		this.layeredPane = layeredPane;
+	}
+	
+	
 }

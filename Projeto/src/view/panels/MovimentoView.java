@@ -13,15 +13,19 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import com.github.lgooddatepicker.components.DatePicker;
+
 import net.miginfocom.swing.MigLayout;
-import util.Modificacoes;
+import util.modifications.Modificacoes;
 
 public class MovimentoView extends JPanel {
 
 	private static final long serialVersionUID = -194366357031753318L;
 	private Modificacoes modificacao = new Modificacoes();
+	private DatePicker dtInicio;
 	private JScrollPane scrollPane;
 	private JTable table;
+	private DatePicker dtFinal;
 
 	public MovimentoView() {
 		
@@ -38,18 +42,49 @@ public class MovimentoView extends JPanel {
 		lblMovimento.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMovimento.setFont(new Font("Arial", Font.BOLD, 18));
 		lblMovimento.setBackground(Color.WHITE);
-		add(lblMovimento, "cell 1 1 3 1,grow");
+		this.add(lblMovimento, "cell 1 1 3 1,grow");
+		
+//		BUGANDO....
+//		
+//		DatePickerSettings dateSettings = new DatePickerSettings();
+//		dateSettings.setAllowKeyboardEditing(false);
+		
+		dtInicio = new DatePicker();
+//		TXT
+		dtInicio.getComponentDateTextField().setBackground(Color.WHITE);
+		dtInicio.getComponentDateTextField().setFont(new Font("Arial", Font.BOLD, 16));
+		dtInicio.getComponentDateTextField().setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		dtInicio.getComponentDateTextField().setHorizontalAlignment(SwingConstants.CENTER);
+//		BOTAO
+		dtInicio.getComponentToggleCalendarButton().setText("Início");
+		dtInicio.getComponentToggleCalendarButton().setPreferredSize(new Dimension(50, 20));
+		dtInicio.getComponentToggleCalendarButton().setFont(new Font("Arial", Font.BOLD, 16));
+		dtInicio.getComponentToggleCalendarButton().setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		this.add(dtInicio, "cell 10 1,grow");
+
+		dtFinal = new DatePicker();
+//		TXT
+		dtFinal.getComponentDateTextField().setBackground(Color.WHITE);
+		dtFinal.getComponentDateTextField().setFont(new Font("Arial", Font.BOLD, 16));
+		dtFinal.getComponentDateTextField().setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		dtFinal.getComponentDateTextField().setHorizontalAlignment(SwingConstants.CENTER);
+//		BOTAO
+		dtFinal.getComponentToggleCalendarButton().setText("Fim");
+		dtFinal.getComponentToggleCalendarButton().setPreferredSize(new Dimension(50, 20));
+		dtFinal.getComponentToggleCalendarButton().setFont(new Font("Arial", Font.BOLD, 16));
+		dtFinal.getComponentToggleCalendarButton().setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		this.add(dtFinal, "cell 11 1,grow");
 		
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.setPreferredSize(new Dimension(80, 25));
 		btnPesquisar.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		btnPesquisar.setFont(new Font("Arial", Font.BOLD, 16));
-		add(btnPesquisar, "cell 12 1 2 1,grow");
+		this.add(btnPesquisar, "cell 12 1 2 1,grow");
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBackground(Color.WHITE);
 		scrollPane.getViewport().setBackground(Color.WHITE);
-		add(scrollPane, "cell 1 3 13 11,grow");
+		this.add(scrollPane, "cell 1 3 13 11,grow");
 		
 		String[] colunmName = {"Número", "Nome", "Plano", "Valor", "Entrada", "Saída"};
 		Object[][] data = {};

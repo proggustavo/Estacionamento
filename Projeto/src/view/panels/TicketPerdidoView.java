@@ -41,61 +41,61 @@ public class TicketPerdidoView extends JPanel {
 		add(lblRegistroDeTicket, "cell 1 1 13 1,grow");
 		
 		JLabel lblNome = new JLabel("Nome:");
-		lblNome.setFont(new Font("Arial", Font.BOLD, 18));
+		lblNome.setFont(new Font("Arial", Font.BOLD, 14));
 		lblNome.setBackground(Color.WHITE);
 		add(lblNome, "cell 2 4 2 1,grow");
 		
 		JLabel lblNewLabel = new JLabel("CPF:");
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 18));
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 14));
 		lblNewLabel.setBackground(Color.WHITE);
 		add(lblNewLabel, "cell 2 5 2 1,grow");
 		
 		JLabel lblPlaca = new JLabel("PLACA:");
-		lblPlaca.setFont(new Font("Arial", Font.BOLD, 18));
+		lblPlaca.setFont(new Font("Arial", Font.BOLD, 14));
 		lblPlaca.setBackground(Color.WHITE);
 		add(lblPlaca, "cell 2 6 2 1,grow");
 		
 		JLabel lblRenavam = new JLabel("RENAVAM:");
-		lblRenavam.setFont(new Font("Arial", Font.BOLD, 18));
+		lblRenavam.setFont(new Font("Arial", Font.BOLD, 14));
 		lblRenavam.setBackground(Color.WHITE);
 		add(lblRenavam, "cell 2 7 2 1,grow");
 		
 		JLabel lblValorASer = new JLabel("<html><body>VALOR A<br>SER PAGO:</body></html>");
-		lblValorASer.setFont(new Font("Arial", Font.BOLD, 18));
+		lblValorASer.setFont(new Font("Arial", Font.BOLD, 14));
 		lblValorASer.setBackground(Color.WHITE);
 		add(lblValorASer, "cell 2 8 2 1,grow");
 		
 		JLabel lblPgto = new JLabel("valor a ser pago");
 		lblPgto.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPgto.setFont(new Font("Arial", Font.BOLD, 20));
+		lblPgto.setFont(new Font("Arial", Font.BOLD, 18));
 		lblPgto.setBackground(Color.BLACK);
 		add(lblPgto, "cell 4 8 5 1,grow");
 		
 		JLabel lblformaDepagamento = new JLabel("<html><body>FORMA DE<br>PAGAMENTO:</body></html>");
-		lblformaDepagamento.setFont(new Font("Arial", Font.BOLD, 18));
+		lblformaDepagamento.setFont(new Font("Arial", Font.BOLD, 14));
 		lblformaDepagamento.setBackground(Color.WHITE);
 		add(lblformaDepagamento, "cell 2 9 2 1,alignx left,growy");
 		
 		JTextField txtNome = new JTextField();
-		txtNome.setFont(new Font("Arial", Font.BOLD, 20));
+		txtNome.setFont(new Font("Arial", Font.BOLD, 14));
 		txtNome.setBorder(new LineBorder(Color.BLACK, 1, true));
 		add(txtNome, "cell 4 4 5 1,grow");
 		txtNome.setColumns(10);
 		
 		JTextField txtCPF = new JTextField();
-		txtCPF.setFont(new Font("Arial", Font.BOLD, 20));
+		txtCPF.setFont(new Font("Arial", Font.BOLD, 14));
 		txtCPF.setBorder(new LineBorder(Color.BLACK, 1, true));
 		txtCPF.setColumns(10);
 		add(txtCPF, "cell 4 5 5 1,grow");
 		
 		JTextField txtPlaca = new JTextField();
-		txtPlaca.setFont(new Font("Arial", Font.BOLD, 20));
+		txtPlaca.setFont(new Font("Arial", Font.BOLD, 14));
 		txtPlaca.setBorder(new LineBorder(Color.BLACK, 1, true));
 		txtPlaca.setColumns(10);
 		add(txtPlaca, "cell 4 6 5 1,grow");
 		
 		JTextField txtRenavam = new JTextField();
-		txtRenavam.setFont(new Font("Arial", Font.BOLD, 20));
+		txtRenavam.setFont(new Font("Arial", Font.BOLD, 14));
 		txtRenavam.setBorder(new LineBorder(Color.BLACK, 1, true));
 		txtRenavam.setColumns(10);
 		add(txtRenavam, "cell 4 7 5 1,grow");
@@ -106,7 +106,7 @@ public class TicketPerdidoView extends JPanel {
 		tiposPagamento.add(CARTAO);
 		
 		JComboBox<Object> comboBox = new JComboBox<Object>(tiposPagamento.toArray());
-		comboBox.setFont(new Font("Arial", Font.BOLD, 20));
+		comboBox.setFont(new Font("Arial", Font.BOLD, 14));
 		comboBox.setBorder(new LineBorder(Color.BLACK, 1, true));
 		comboBox.setBackground(Color.WHITE);
 		add(comboBox, "cell 4 9 5 1,grow");

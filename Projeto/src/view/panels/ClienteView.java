@@ -12,11 +12,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
-import util.Modificacoes;
+import util.modifications.Modificacoes;
+import view.mainFrame.MainView;
+import view.panels.cadastro.CadastroView;
 
 public class ClienteView extends JPanel {
 
@@ -43,11 +46,20 @@ public class ClienteView extends JPanel {
 		lblSelecionar.setFont(new Font("Arial", Font.BOLD, 16));
 		add(lblSelecionar, "flowx,cell 1 1,alignx left,growy");
 		
-		JButton btnCadastrar = new JButton("<html><body>Cadastrar<br>Atualizar</body></html>");
+		JButton btnCadastrar = new JButton("Cadatrar");
+//		JButton btnCadastrar = new JButton("<html><body>Cadastrar<br>Atualizar</body></html>");
 		btnCadastrar.setIcon(new ImageIcon(ClienteView.class.getResource("/img/atutalizacao-50.png")));
 		btnCadastrar.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		btnCadastrar.setFont(new Font("Arial", Font.BOLD, 20));
 		add(btnCadastrar, "cell 2 1,grow");
+		btnCadastrar.addActionListener(e -> {
+			
+			
+			MainView topFrame = (MainView) SwingUtilities.getWindowAncestor(this);
+			CadastroView cadastroView = new CadastroView();
+			topFrame.swithPanel(cadastroView);
+			
+		});
 		
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.setIcon(new ImageIcon(ClienteView.class.getResource("/img/icons8-apagar-para-sempre-38.png")));
@@ -57,6 +69,8 @@ public class ClienteView extends JPanel {
 		btnExcluir.setEnabled(false);
 		add(btnExcluir, "cell 2 3,grow");
 		btnExcluir.addActionListener(e -> {
+			
+//			Padronizar os Labels ?
 			
 //			String mensagem = "Excluido's com Sucesso";
 //			JLabel lblExcluir = new JLabel();
@@ -100,6 +114,11 @@ public class ClienteView extends JPanel {
 		btnProcurar.setFont(new Font("Arial", Font.BOLD, 16));
 		btnProcurar.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		add(btnProcurar, "cell 7 1,grow");
+		btnProcurar.addActionListener(e -> {
+			
+			
+			
+		});
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBackground(Color.WHITE);
