@@ -19,7 +19,6 @@ import javax.swing.table.DefaultTableModel;
 import net.miginfocom.swing.MigLayout;
 import util.modifications.Modificacoes;
 import view.mainFrame.MainView;
-import view.panels.cadastro.CadastroView;
 
 public class ClienteView extends JPanel {
 
@@ -32,7 +31,7 @@ public class ClienteView extends JPanel {
 		
 		this.setBounds(100, 100, 1028, 747);
 		this.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		this.setLayout(new MigLayout("", "[10px][grow][grow][grow][grow][grow][grow][grow][10px]", "[10px][80px][20px][grow][][20px][20px][grow][grow][grow][grow][grow][grow][10px]"));
+		this.setLayout(new MigLayout("", "[10px][grow][grow][grow][grow][grow][grow][grow][10px]", "[10px][80px][20px][grow][20px][20px][grow][grow][grow][grow][grow][grow][10px]"));
 		
 		
 		this.initialize();
@@ -80,7 +79,7 @@ public class ClienteView extends JPanel {
 			
 		});
 		
-		JCheckBox chckbxDesejaEscluirOs = new JCheckBox("<html><body>Deseja Excluir os<br>Clientes Selecionados?</body></html>");
+		JCheckBox chckbxDesejaEscluirOs = new JCheckBox("<html><body>Deseja Excluir o<br>Cliente Selecionado?</body></html>");
 		chckbxDesejaEscluirOs.setFont(new Font("Arial", Font.BOLD, 12));
 		chckbxDesejaEscluirOs.setBackground(Color.WHITE);
 		add(chckbxDesejaEscluirOs, "cell 1 3,grow");
@@ -99,7 +98,7 @@ public class ClienteView extends JPanel {
 		JLabel lblTotalDeClientes = new JLabel("Total de Clientes Cadastrados:");
 		lblTotalDeClientes.setBackground(Color.WHITE);
 		lblTotalDeClientes.setFont(new Font("Arial", Font.BOLD, 14));
-		add(lblTotalDeClientes, "cell 1 5,grow");
+		add(lblTotalDeClientes, "cell 1 4,grow");
 		
 		
 		JTextField txtProcurar = new JTextField();
@@ -124,7 +123,12 @@ public class ClienteView extends JPanel {
 		scrollPane.setBackground(Color.WHITE);
 		scrollPane.setBorder(null);
 		scrollPane.getViewport().setBackground(Color.WHITE);
-		add(scrollPane, "cell 1 7 7 6,grow");
+		
+		JLabel lblSelecioneUmaLinha = new JLabel("Selecione Uma Linha por Vez");
+		lblSelecioneUmaLinha.setHorizontalAlignment(SwingConstants.LEFT);
+		lblSelecioneUmaLinha.setFont(new Font("Arial", Font.BOLD, 12));
+		add(lblSelecioneUmaLinha, "cell 2 4,growx,aligny top");
+		add(scrollPane, "cell 1 6 7 6,grow");
 		
 		String[] colunmName = { "#", "Nome", "Plano", "Vencimento" };
 		Object[][] data = {};

@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import model.bo.MoveBO;
 import model.vo.MoveVO;
 
@@ -33,6 +35,10 @@ public class ControllerInicio {
 	public String excluirUsuarios(MoveVO vo) {
 		
 		return msg;
+	}
+
+	public ArrayList<MoveVO> controllerConsultarTabelaInicio(String text) {
+		return bo.boConsultarTabelaInicio(text);
 	}
 	
 	

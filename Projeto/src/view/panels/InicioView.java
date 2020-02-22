@@ -25,6 +25,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.text.MaskFormatter;
 
 import controller.ControllerInicio;
+import model.seletor.SeletorInicio;
 import model.vo.MoveVO;
 import net.miginfocom.swing.MigLayout;
 import util.modifications.Modificacoes;
@@ -186,6 +187,10 @@ public class InicioView extends JPanel {
 		btnGerarTicket.setFont(new Font("Arial", Font.BOLD, 16));
 		add(btnGerarTicket, "cell 1 10 2 1,grow");
 		btnGerarTicket.addActionListener(e -> {
+			
+			//TODO Gerar um numero aleatorio apartir da classe Math,
+			//verificar se ele já existe, e se tem necessidade de existir somente uma vez no banco/sistema
+			// & mandar os dados para a JTable
 
 		});
 
@@ -196,6 +201,8 @@ public class InicioView extends JPanel {
 		btnImprimirComprovante.setFont(new Font("Arial", Font.BOLD, 16));
 		add(btnImprimirComprovante, "cell 1 11 2 1,grow");
 		btnImprimirComprovante.addActionListener(e -> {
+			
+			//TODO Selecionar A(uma por vez) linha, e gerar comprovante(Imprimir)
 
 		});
 
@@ -209,9 +216,14 @@ public class InicioView extends JPanel {
 
 			String procurar = txtProcurar.getText();
 			controller.validate(procurar);
+
+			//TODO Passar a pesquisa para a jtable com seletor
+			String text = txtProcurar.getText();
+			ControllerInicio controller = new ControllerInicio();
+			ArrayList<MoveVO> vo = controller.controllerConsultarTabelaInicio(text);
 			
 			
-			consultarTabela();
+			consultarTabela(vo);
 		});
 
 		scrollPane = new JScrollPane();
@@ -246,22 +258,37 @@ public class InicioView extends JPanel {
 		btnRemover.addActionListener(e -> {
 			
 			InicioDefaultTableModel model = (InicioDefaultTableModel) table.getModel();
-			MoveVO vo = model.getMovimento(table.getSelectedRow());
+			MoveVO vo = model.getMoveVO(table.getSelectedRow());
 			msg = controller.excluirUsuarios(vo);
 			
 			JOptionPane.showConfirmDialog(this, modificacao.labelConfig(lblMetodo, msg),
 			"EXCLUIR CITKER / CARTÃO?", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
 			
-			atualizarTable();
+//			atualizarTable();
 		});
 	}
 	
 	private void atualizarTable() {
-		// TODO Atualizar a Tabela
+		InicioDefaultTableModel model = (InicioDefaultTableModel) table.getModel();
 		
+		Object row[] = new Object[5];
+		ArrayList<MoveVO> array = new ArrayList<MoveVO>();
+		MoveVO vo = new MoveVO();
+		for (int i = 0; i < array.size(); i++) {
+			
+			row[0] = vo.getTicket_cartao();
+			row[1] = vo.getCarro().getDescricao();
+			row[2] = vo.getCarro().getPlaca();
+			row[3] = vo.getCliente().getNome();
+			row[4] = vo.getEntrada();
+			row[5] = vo.isCbx();
+			
+			model.addRow(row);
+			
+		}
 	}
 
-	private void consultarTabela() {
+	private void consultarTabela(ArrayList<MoveVO> vo) {
 		// TODO Consultar a Tabela com Seletor
 	}
 

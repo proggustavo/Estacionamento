@@ -1,4 +1,4 @@
-package view.panels.cadastro;
+package view.panels;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -15,6 +15,9 @@ import javax.swing.table.DefaultTableModel;
 
 import net.miginfocom.swing.MigLayout;
 import util.modifications.Modificacoes;
+import view.panels.cadastro.DadosCadastroView;
+import view.panels.cadastro.EnderecoCadastroView;
+import view.panels.cadastro.PlanoCadastroView;
 
 public class CadastroView extends JPanel {
 

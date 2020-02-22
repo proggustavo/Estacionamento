@@ -3,7 +3,6 @@ package util.table;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -38,7 +37,7 @@ public class InicioDefaultTableModel extends DefaultTableModel {
 		return linhas.get(rowIndex).getEntrada().toLocalTime();
 	}
 
-	public MoveVO getMovimento (int row) {
+	public MoveVO getMoveVO (int row) {
 		return linhas.get(row);
 	}
 	

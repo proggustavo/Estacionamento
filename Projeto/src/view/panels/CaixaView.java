@@ -27,8 +27,8 @@ public class CaixaView extends JPanel {
 	public CaixaView() {
 		
 		this.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		this.setBounds(100, 100, 886, 658);
-		this.setLayout(new MigLayout("", "[10px][grow][grow][grow][grow][grow][grow][grow][grow][5px][grow][grow][5px][grow][grow][5px][grow][grow][10px]", "[10px][80px][20px][35px][20px][grow][grow][grow][grow][grow][grow][grow][10px]"));
+		this.setBounds(100, 100, 910, 689);
+		this.setLayout(new MigLayout("", "[10px][grow][grow][grow][grow][grow][grow][grow][grow][5px][grow][grow][5px][grow][grow][5px][grow][grow][10px]", "[10px][80px][20px][35px][20px][grow][grow][grow][grow][grow][grow][grow][10px][grow][10px][10px]"));
 		
 		this.initialize();
 	}
@@ -112,13 +112,20 @@ public class CaixaView extends JPanel {
 		scrollPane.setBorder(null);
 		add(scrollPane, "cell 1 5 17 7,grow");
 		
-		String[] colunmName = {"#", "Ticket / Cartão", "Descrição", "Forma de Pagamento", "Valor", "Imprimir"};
+		String[] colunmName = {"Ticket / Cartão", "Descrição","Hora de Entrada", "Hora de Validação", "Forma de Pagamento", "Valor", "Imprimir"};
 		Object[][] data = {};
 		
 		DefaultTableModel model = new DefaultTableModel(data, colunmName);
 		table = new JTable(model);
 		modificacao.tabelaConfig(table);
 		scrollPane.setViewportView(table);
+		
+		JButton btnImprimirComprovante = new JButton("Imprimir Comprovante");
+		btnImprimirComprovante.setIcon(new ImageIcon(CaixaView.class.getResource("/img/icons8-impressora-de-porta-aberta-50.png")));
+		btnImprimirComprovante.setBackground(Color.WHITE);
+		btnImprimirComprovante.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		btnImprimirComprovante.setFont(new Font("Arial", Font.BOLD, 20));
+		add(btnImprimirComprovante, "cell 7 13 7 1,grow");
 		
 	}
 }

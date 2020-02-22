@@ -79,7 +79,7 @@ public class Modificacoes {
 		label.setForeground(Color.BLACK);
 		
 		if (text.trim().isEmpty() || text.trim().equals("")) {
-			label.setText("<html><body>Erro: Line 76 >> Modificacoes.class<br>labelConfig Method.<br>Campo Vazio</body></html>");
+			label.setText("<html><body>Erro: Line 76 >> Modificacoes.class<br>Method: labelConfig.<br>Motivo: Campo Vazio</body></html>");
 			return label;
 		}
 
@@ -120,10 +120,6 @@ public class Modificacoes {
 //		CaixaView caixaView = new CaixaView();
 //		MovimentoView movimentoView = new MovimentoView();
 		
-//		if (inicioView instanceof view)) {
-//			
-//		}
-		
 //		if (inicioView instanceof InicioView) {
 //			if (inicioView.contains(table)) {
 //				
@@ -142,7 +138,7 @@ public class Modificacoes {
 		table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
 		table.getTableHeader().setBackground(Color.WHITE);
 		table.setColumnSelectionAllowed(true);
-		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		table.setRowHeight(35);
 		table.setShowGrid(true);

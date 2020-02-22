@@ -10,11 +10,11 @@ public class MoveVO {
 	private ClienteVO cliente;
 	private LocalDateTime entrada;
 	private LocalDateTime saida;
+	private double valor;
 	private boolean cbx;
-	private MoveVO vo;
 	
 	public MoveVO(int id, long ticket_cartao, CarroVO carro, ClienteVO cliente, LocalDateTime entrada,
-			LocalDateTime saida, boolean cbx) {
+			LocalDateTime saida, double valor, boolean cbx) {
 		super();
 		this.id = id;
 		this.ticket_cartao = ticket_cartao;
@@ -22,6 +22,7 @@ public class MoveVO {
 		this.cliente = cliente;
 		this.entrada = entrada;
 		this.saida = saida;
+		this.valor = valor;
 		this.cbx = cbx;
 	}
 
@@ -85,13 +86,12 @@ public class MoveVO {
 		this.cbx = cbx;
 	}
 
-	public MoveVO getVo() {
-		return vo;
+	public double getValor() {
+		return valor;
 	}
 
-	public void setVo(MoveVO vo) {
-		this.vo = vo;
+	public void setValor(double valor) {
+		this.valor = valor;
 	}
-	
 	
 }
