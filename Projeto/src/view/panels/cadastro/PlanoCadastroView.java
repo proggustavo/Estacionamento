@@ -20,7 +20,7 @@ public class PlanoCadastroView extends JPanel {
 	public PlanoCadastroView() {
 		
 		this.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		this.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow]"));
+		this.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow]"));
 		
 		this.initialize();
 	}
@@ -31,25 +31,25 @@ public class PlanoCadastroView extends JPanel {
 		lblPlano.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPlano.setFont(new Font("Arial", Font.BOLD, 16));
 		lblPlano.setBackground(Color.WHITE);
-		add(lblPlano, "cell 0 2 2 1,grow");
+		add(lblPlano, "cell 0 3 2 1,grow");
 		
 		JLabel lblFormaPgto = new JLabel("<html><body>Forma de<br align=Center>Pagamento</body></html>");
 		lblFormaPgto.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFormaPgto.setFont(new Font("Arial", Font.BOLD, 16));
 		lblFormaPgto.setBackground(Color.WHITE);
-		add(lblFormaPgto, "cell 0 3 2 1,grow");
+		add(lblFormaPgto, "cell 0 4 2 1,grow");
 
 		cbPlano = new JComboBox<Object>();
 		cbPlano.setFont(new Font("Arial", Font.BOLD, 16));
 		cbPlano.setBorder(new LineBorder(Color.BLACK, 1, true));
 		cbPlano.setBackground(Color.WHITE);
-		add(cbPlano, "cell 2 2 4 1,grow");
+		add(cbPlano, "cell 2 3 4 1,grow");
 		
 		cbFormaPgto = new JComboBox<String>();
 		cbFormaPgto.setFont(new Font("Arial", Font.BOLD, 16));
 		cbFormaPgto.setBorder(new LineBorder(Color.BLACK, 1, true));
 		cbFormaPgto.setBackground(Color.WHITE);
-		add(cbFormaPgto, "cell 2 3 4 1,grow");
+		add(cbFormaPgto, "cell 2 4 4 1,grow");
 		
 	}
 }

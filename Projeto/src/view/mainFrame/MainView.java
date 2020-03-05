@@ -20,6 +20,7 @@ import view.panels.ClienteView;
 import view.panels.InicioView;
 import view.panels.MovimentoView;
 import view.panels.TicketPerdidoView;
+import java.awt.Dimension;
 
 public class MainView extends JFrame {
 
@@ -46,11 +47,12 @@ public class MainView extends JFrame {
 	private JButton btnClientes;
 	private JButton btnTicketPerdido;
 	private JButton btnMovimento;
+	private JButton btnConfig;
 
 	public MainView() {
 		
 		this.setTitle("Estacionamento Senac - EasyWay");
-		this.setBounds(100, 100, 936, 739);
+		this.setBounds(100, 100, 1163, 739);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(MainView.class.getResource("/img/icons8-p-50.png")));
 		this.getContentPane().setBackground(Color.WHITE);
@@ -148,6 +150,25 @@ public class MainView extends JFrame {
 			swithPanel(ticketPerdidoView);
 			
 		});
+		
+		menuBar.add(Box.createHorizontalGlue());
+		
+		btnConfig = new JButton("CONFIGURAÇÕES");
+		btnConfig.setIcon(new ImageIcon(MainView.class.getResource("/img/atutalizacao-50.png")));
+		btnConfig.setFont(new Font("Arial", Font.BOLD, 16));
+		btnConfig.setBorder(null);
+		btnConfig.setBackground(Color.WHITE);
+		btnConfig.setAlignmentX(JButton.RIGHT_ALIGNMENT);
+		menuBar.add(btnConfig);
+		btnConfig.addActionListener(e -> {
+			
+			
+			
+		});
+		
+		Component strut5 = Box.createHorizontalStrut(35);
+		menuBar.add(strut5);
+		
 	}
 	
 	public void swithPanel(JPanel panel) {
@@ -170,6 +191,4 @@ public class MainView extends JFrame {
 	public void setLayeredPane(JLayeredPane layeredPane) {
 		this.layeredPane = layeredPane;
 	}
-	
-	
 }

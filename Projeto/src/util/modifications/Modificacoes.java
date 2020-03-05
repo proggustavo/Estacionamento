@@ -1,22 +1,22 @@
 package util.modifications;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.text.ParseException;
 
-import javax.swing.JButton;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.text.MaskFormatter;
 
 public class Modificacoes {
@@ -35,34 +35,6 @@ public class Modificacoes {
 	public static final int TIPO_CONFIRMACAO = 2;
 	public static final int TIPO_DIALOGO = 3;
 	public static final int TIPO_INTERNO = 4;
-
-	public JSeparator separatorConfig(JSeparator separator, Color colorBackground, Color colorForeground) {
-
-		separator.setBackground(colorBackground);
-		separator.setForeground(colorForeground);
-
-		return separator;
-	}
-
-	public JTextField txtConfig(JTextField field, String txt, Font fonte, Color backGround, Color foreGround,
-			Border borda) {
-
-		field.setText(txt);
-		field.setFont(fonte);
-		field.setBackground(backGround);
-		field.setForeground(foreGround);
-		field.setBorder(borda);
-
-		return field;
-	}
-
-	public JButton botaoConfig(JButton button, Border borda, Font fonte) {
-
-		button.setBorder(borda);
-		button.setFont(fonte);
-
-		return button;
-	}
 
 	/**
 	 * Modifica e retorna Label contendo uma Mensagem, com fonte, cor e tamanhos padronizados.
@@ -86,23 +58,23 @@ public class Modificacoes {
 		return label;
 	}
 
-	public void joptionConfig(int tipo, Component parentesco, String txt, String title, int iconeMensagem,
-			int yes_no_cancel, Object[] valores, Object valorInicial) {
-
-		switch (tipo) {
-		case TIPO_MENSAGEM:
-			JOptionPane.showMessageDialog(parentesco, txt, title, iconeMensagem, null);
-
-		case TIPO_CONFIRMACAO:
-			JOptionPane.showConfirmDialog(parentesco, txt, title, iconeMensagem, yes_no_cancel, null);
-
-		case TIPO_DIALOGO:
-			JOptionPane.showInputDialog(parentesco, txt, title, yes_no_cancel, null, valores, valorInicial);
-
-		case TIPO_INTERNO:
-			JOptionPane.showInternalConfirmDialog(parentesco, txt, title, iconeMensagem, yes_no_cancel, null);
-		}
-	}
+//	public void joptionConfig(int tipo, Component parentesco, String txt, String title, int iconeMensagem,
+//			int yes_no_cancel, Object[] valores, Object valorInicial) {
+//
+//		switch (tipo) {
+//		case TIPO_MENSAGEM:
+//			JOptionPane.showMessageDialog(parentesco, txt, title, iconeMensagem, null);
+//
+//		case TIPO_CONFIRMACAO:
+//			JOptionPane.showConfirmDialog(parentesco, txt, title, iconeMensagem, yes_no_cancel, null);
+//
+//		case TIPO_DIALOGO:
+//			JOptionPane.showInputDialog(parentesco, txt, title, yes_no_cancel, null, valores, valorInicial);
+//
+//		case TIPO_INTERNO:
+//			JOptionPane.showInternalConfirmDialog(parentesco, txt, title, iconeMensagem, yes_no_cancel, null);
+//		}
+//	}
 
 	/**
 	 * Modifica e retorna fonte, cor, e tamanho, padronizados.
@@ -115,6 +87,7 @@ public class Modificacoes {
 		DefaultTableCellRenderer centerRendererCenter = new DefaultTableCellRenderer();
 		DefaultTableCellRenderer centerRendererRight = new DefaultTableCellRenderer();
 		
+		// Tentativa para mudar o cellRender dependendo da view
 //		MainView view = new MainView();
 //		InicioView inicioView = new InicioView();
 //		CaixaView caixaView = new CaixaView();
@@ -125,6 +98,8 @@ public class Modificacoes {
 //				
 //			}
 //		}
+		
+//		Renderizar os valores dentro da celular
 		for (int i = 0; i < table.getModel().getColumnCount(); i++) {
 			table.getColumnModel().getColumn(i).setCellRenderer( centerRendererCenter );
 			if (i == 2) {
@@ -139,6 +114,7 @@ public class Modificacoes {
 		table.getTableHeader().setBackground(Color.WHITE);
 		table.setColumnSelectionAllowed(true);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		
 		table.setRowHeight(35);
 		table.setShowGrid(true);
@@ -150,9 +126,50 @@ public class Modificacoes {
 		return table;
 	}
 	
-//	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) 
-//	 return (Component)value;
+	/**
+	 * Método para criar um ComboBox dentro da JTable
+	 * @param table tabela
+	 * @param sportColumn escolher a coluna
+	 */
+//	 Fiddle with the Sport column's cell editors/renderers.
+	public void mostrarComboBoxJTable(JTable table, TableColumn sportColumn) {
+		// Set up the editor for the sport cells.
+		JComboBox comboBox = new JComboBox();
+		comboBox.addItem("TESTE 1");
+		comboBox.addItem("TESTE 2");
+		comboBox.addItem("TESTE 3");
+		comboBox.addItem("TESTE 4");
+		comboBox.addItem("TESTE 5");
+		comboBox.addItem("TESTE 6");
+		sportColumn.setCellEditor(new DefaultCellEditor(comboBox));
+
+//		 Set up tool tips for the sport cells.
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		renderer.setToolTipText("CLIQUE PARA O COMBO BOX APARECER");
+		sportColumn.setCellRenderer(renderer);
+	}
 	
+	/**
+	 * Método para reenderizar a JTable e criar uma mascara
+	 * com campo formatado em uma coluna especifica
+	 * 
+	 * @param table
+	 * @param TableColumn escolher a coluna
+	 */
+	public void maskFormJTable(JTable table, TableColumn sportColumn) {
+		
+		JFormattedTextField placa = new JFormattedTextField();
+		MaskFormatter mascara;
+		try {
+			mascara = new MaskFormatter("HHHHHHHHHH");
+			mascara.setPlaceholderCharacter('?');
+			mascara.install(placa);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		sportColumn.setCellEditor(new DefaultCellEditor(placa));
+
+	}
 	
 	/**
 	 * Adicionar e Remover o PlaceHolder

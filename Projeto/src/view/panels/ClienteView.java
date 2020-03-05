@@ -26,6 +26,7 @@ public class ClienteView extends JPanel {
 	private Modificacoes modificacao = new Modificacoes();
 	private JScrollPane scrollPane;
 	private JTable table;
+	private JLabel lblSelecioneUmaLinha;
 
 	public ClienteView() {
 		
@@ -53,10 +54,24 @@ public class ClienteView extends JPanel {
 		add(btnCadastrar, "cell 2 1,grow");
 		btnCadastrar.addActionListener(e -> {
 			
-			
 			MainView topFrame = (MainView) SwingUtilities.getWindowAncestor(this);
 			CadastroView cadastroView = new CadastroView();
 			topFrame.swithPanel(cadastroView);
+			
+		});
+		
+		JButton btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.setIcon(new ImageIcon(ClienteView.class.getResource("/img/atutalizacao-50.png")));
+		btnAtualizar.setFont(new Font("Arial", Font.BOLD, 20));
+		btnAtualizar.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		add(btnAtualizar, "cell 3 1,grow");
+		btnAtualizar.addActionListener(e -> { 
+			
+//			MainView topFrame = (MainView) SwingUtilities.getWindowAncestor(this);
+//			CadastroView cadastroView = new CadastroView();
+//			topFrame.swithPanel(cadastroView);
+//			PREENCHER OS CAMPOS AO CLICAR EM ATUALIZAR
+			
 			
 		});
 		
@@ -88,9 +103,11 @@ public class ClienteView extends JPanel {
 			if (chckbxDesejaEscluirOs.isSelected()) {
 				btnExcluir.setEnabled(true);
 				btnExcluir.setBackground(Color.decode("#FF7F50"));
+				lblSelecioneUmaLinha.setEnabled(true);
 			} else {
 				btnExcluir.setEnabled(false);
 				btnExcluir.setBackground(Color.WHITE);
+				lblSelecioneUmaLinha.setEnabled(false);
 			}
 			
 		});
@@ -124,9 +141,10 @@ public class ClienteView extends JPanel {
 		scrollPane.setBorder(null);
 		scrollPane.getViewport().setBackground(Color.WHITE);
 		
-		JLabel lblSelecioneUmaLinha = new JLabel("Selecione Uma Linha por Vez");
+		lblSelecioneUmaLinha = new JLabel("Selecione Uma Linha por Vez");
 		lblSelecioneUmaLinha.setHorizontalAlignment(SwingConstants.LEFT);
 		lblSelecioneUmaLinha.setFont(new Font("Arial", Font.BOLD, 12));
+		lblSelecioneUmaLinha.setEnabled(false);
 		add(lblSelecioneUmaLinha, "cell 2 4,growx,aligny top");
 		add(scrollPane, "cell 1 6 7 6,grow");
 		

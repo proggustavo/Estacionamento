@@ -2,97 +2,96 @@ package model.vo;
 
 import java.time.LocalDateTime;
 
+import model.vo.cliente.ClienteVO;
+import model.vo.cliente.ContratoVO;
+import model.vo.cliente.EnderecoVO;
+import model.vo.movimentos.PlanoVO;
+import model.vo.movimentos.TicketVO;
+import model.vo.veiculo.CarroVO;
+import model.vo.veiculo.MarcaVO;
+import model.vo.veiculo.ModeloVO;
+
 public class Tester {
 
-	CaixaVO caixa;
-	CarroVO carro;
-	ClienteVO cliente;
-	EnderecoVO endereco;
-	LostTicketVO ticketPerdido;
-	MoveVO movimento;
+	private MarcaVO marca;
+	private ModeloVO modelo;
+	private CarroVO carro;
+	private EnderecoVO endereco; 
+	private ClienteVO cliente;
+	private PlanoVO plano;
+	private ContratoVO contrato;
+	private TicketVO ticket;
+//	private MoveVO moveVO;
 	
-	public CaixaVO getCaixa() {
-		return caixa;
-	}
-	public void setCaixa(CaixaVO caixa) {
-		this.caixa = caixa;
-	}
-	public CarroVO getCarro() {
-		return carro;
-	}
-	public void setCarro(CarroVO carro) {
-		this.carro = carro;
-	}
-	public ClienteVO getCliente() {
-		return cliente;
-	}
-	public void setCliente(ClienteVO cliente) {
-		this.cliente = cliente;
-	}
-	public EnderecoVO getEndereco() {
-		return endereco;
-	}
-	public void setEndereco(EnderecoVO endereco) {
-		this.endereco = endereco;
-	}
-	public LostTicketVO getTicketPerdido() {
-		return ticketPerdido;
-	}
-	public void setTicketPerdido(LostTicketVO ticketPerdido) {
-		this.ticketPerdido = ticketPerdido;
-	}
-	public MoveVO getMovimento() {
-		return movimento;
-	}
-	public void setMovimento(MoveVO movimento) {
-		this.movimento = movimento;
+	public void setMarca() {
+		this.marca.setId(1);
+		this.marca.setMarca("Teste de Marca");
+		
 	}
 	
-	public void setCaixa()	 {
-		caixa.setId(1);
-		caixa.setDescricao("Descrevendo Alguma Coisa no Caixa");
-		caixa.setFormaPgto(1);
-		caixa.setPlano("Mensal Teste");
-		caixa.setPlano_vencimento(LocalDateTime.now());
-		caixa.setValorTicket(33.141517);
+	public void setModelo() {
+		this.modelo.setId(1);
+		this.modelo.setMarca(marca);
+		this.modelo.setDescricao("Teste de Descricao");
 	}
+	
 	public void setCarro() {
-		carro.setId(1);
-		carro.setDescricao("Descrevendo Algum Carro");
-		carro.setMarca("Marca Qualquer");
-		carro.setModelo("Modelo Qualquer");
-		carro.setPlaca("Placa Qualquer");
+		this.carro.setId(1);
+		this.carro.setCor("Branco");
+		this.carro.setModelo(modelo);
+		this.carro.setPlaca("ABC-1234");
 	}
-	public void setCliente() {
-		cliente.setId(1);
-		cliente.setCarro(carro);
-		cliente.setCPF("12345678910");
-		cliente.setNome("Sr. Barata Voadora");
-		cliente.setTelefone("00988776655");
-		cliente.setEndereco(endereco);
-	}
+	
 	public void setEndereco() {
-		endereco.setId(1);
-		endereco.setNumero(999);
-		endereco.setCidade("Palhoçada");
-		endereco.setBairro("Dos ladrões");
-		endereco.setRua("Rua do Assalto");
+
+		this.endereco.setId(1);
+		this.endereco.setNumero(10);
+		this.endereco.setRua("SILVA JARDIM, 3--");
+		this.endereco.setBairro("PRAINHA");
+		this.endereco.setCidade("FLORIANOPOLIS");
 	}
-	public void setLostTicket() {
-		ticketPerdido.setId(1);
-		ticketPerdido.setNome(cliente.getNome());
-		ticketPerdido.setCPF(cliente.getCPF());
-		ticketPerdido.setPlaca(cliente.getCarro().getPlaca());
-		ticketPerdido.setFormaPgto(1);
-		ticketPerdido.setRenavam("Não Sei o que é um renavam");
+	
+	public void setCliente() {
+
+		this.cliente.setId(1);
+		this.cliente.setNome("JOAO");
+		this.cliente.setCPF("12345678910");
+		this.cliente.setRG("9888777");
+		this.cliente.setTelefone("48988776655");
+		this.cliente.setEmail("teste@email.com");
+		this.cliente.setEndereco(endereco);
+		
 	}
-	public void setMovimento() {
-		movimento.setId(1);
-		movimento.setCarro(carro);
-		movimento.setCbx(true);
-		movimento.setCliente(cliente);
-		movimento.setEntrada(LocalDateTime.now());
-		movimento.setSaida(LocalDateTime.MAX);
-		movimento.setTicket_cartao(40028922);
+	
+	public void setPlano() {
+		
+		this.plano.setId(1);
+		this.plano.setTipo("PRÉ-PAGO");
+		this.plano.setDescircao("PRÉ-PAGO, UTILIZADOR DIÁRIO");
+		
 	}
+	
+	public void setContrato() {
+		
+		this.contrato.setId(1);
+		this.contrato.setN_cartao(000111222333);
+		this.contrato.setDtEntrada(LocalDateTime.now());
+		this.contrato.setDtSaida(LocalDateTime.now());
+		this.contrato.setAtivo(true);
+		this.contrato.setValor(100.00);
+		this.contrato.setPlano(plano);
+		this.contrato.setCliente(cliente);
+
+	}
+	
+	public void setTicket() {
+		
+		this.ticket.setId(1);
+		this.ticket.setCliente(cliente);
+		this.ticket.setN_ticket(999888777);
+		this.ticket.setValor(30.00);
+		this.ticket.setHr_validacao(LocalDateTime.now());
+
+	}
+	
 }

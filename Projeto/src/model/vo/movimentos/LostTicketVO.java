@@ -1,4 +1,4 @@
-package model.vo;
+package model.vo.movimentos;
 
 public class LostTicketVO {
 

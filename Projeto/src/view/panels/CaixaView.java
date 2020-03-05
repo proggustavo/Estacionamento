@@ -112,7 +112,7 @@ public class CaixaView extends JPanel {
 		scrollPane.setBorder(null);
 		add(scrollPane, "cell 1 5 17 7,grow");
 		
-		String[] colunmName = {"Ticket / Cartão", "Descrição","Hora de Entrada", "Hora de Validação", "Forma de Pagamento", "Valor", "Imprimir"};
+		String[] colunmName = {"Ticket / Cartão", "Descrição","Hora de Entrada", "Hora de Validação", "Forma de Pagamento", "Valor"};
 		Object[][] data = {};
 		
 		DefaultTableModel model = new DefaultTableModel(data, colunmName);

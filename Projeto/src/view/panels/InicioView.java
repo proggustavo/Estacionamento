@@ -22,14 +22,15 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import controller.ControllerInicio;
-import model.seletor.SeletorInicio;
-import model.vo.MoveVO;
+import model.vo.Tester;
+import model.vo.movimentos.FluxoVO;
+import model.vo.movimentos.MovimentoVO;
 import net.miginfocom.swing.MigLayout;
 import util.modifications.Modificacoes;
-import util.table.InicioDefaultTableModel;
 
 public class InicioView extends JPanel {
 
@@ -57,7 +58,10 @@ public class InicioView extends JPanel {
 	private JLabel lblTotalDeVeiculos;
 	private JLabel lblValorPgto;
 	private JLabel lblMetodo;
-	
+
+	private String[] colunas = new String[] { "Ticket / Cartão", "Carro", "Placa", "Cliente", "Entrada" };
+	private ArrayList<MovimentoVO> movimentacoes;
+
 	private String msg;
 
 	public InicioView() {
@@ -74,9 +78,9 @@ public class InicioView extends JPanel {
 
 	private void initialize() {
 
-		//Mascara e PlaceHolder
+		// Mascara e PlaceHolder
 		maskAndPlaceHolder();
-		
+
 		JSeparator separatorCima = new JSeparator();
 		separatorCima.setBackground(Color.BLACK);
 		separatorCima.setForeground(Color.BLACK);
@@ -177,7 +181,8 @@ public class InicioView extends JPanel {
 			controller = new ControllerInicio();
 			msg = controller.validate(ticket);
 
-			JOptionPane.showMessageDialog(this, modificacao.labelConfig(lblMetodo, msg),"VALIDAÇÃO", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, modificacao.labelConfig(lblMetodo, msg), "VALIDAÇÃO",
+					JOptionPane.WARNING_MESSAGE);
 		});
 
 		btnGerarTicket = new JButton("Gerar Ticket");
@@ -187,9 +192,10 @@ public class InicioView extends JPanel {
 		btnGerarTicket.setFont(new Font("Arial", Font.BOLD, 16));
 		add(btnGerarTicket, "cell 1 10 2 1,grow");
 		btnGerarTicket.addActionListener(e -> {
-			
-			//TODO Gerar um numero aleatorio apartir da classe Math,
-			//verificar se ele já existe, e se tem necessidade de existir somente uma vez no banco/sistema
+
+			// TODO Gerar um numero aleatorio apartir da classe Math,
+			// verificar se ele já existe, e se tem necessidade de existir somente uma vez
+			// no banco/sistema
 			// & mandar os dados para a JTable
 
 		});
@@ -201,8 +207,8 @@ public class InicioView extends JPanel {
 		btnImprimirComprovante.setFont(new Font("Arial", Font.BOLD, 16));
 		add(btnImprimirComprovante, "cell 1 11 2 1,grow");
 		btnImprimirComprovante.addActionListener(e -> {
-			
-			//TODO Selecionar A(uma por vez) linha, e gerar comprovante(Imprimir)
+
+			// TODO Selecionar A(uma por vez) linha, e gerar comprovante(Imprimir)
 
 		});
 
@@ -214,41 +220,33 @@ public class InicioView extends JPanel {
 		splitPane.setLeftComponent(btnProcurar);
 		btnProcurar.addActionListener(e -> {
 
-			String procurar = txtProcurar.getText();
-			controller.validate(procurar);
+//			String procurar = txtProcurar.getText();
+//			controller.validate(procurar);
 
-			//TODO Passar a pesquisa para a jtable com seletor
-			String text = txtProcurar.getText();
-			ControllerInicio controller = new ControllerInicio();
-			ArrayList<MoveVO> vo = controller.controllerConsultarTabelaInicio(text);
-			
-			
-			consultarTabela(vo);
+			// TODO Passar a pesquisa para a jtable com seletor
+//			String text = txtProcurar.getText();
+//			ControllerInicio controller = new ControllerInicio();
+//			ArrayList<MoveVO> vo = controller.controllerConsultarTabelaInicio(text);
+
+//			consultarTabela(vo);
+
+		
+		
+			atualizarTabela();
+		
 		});
 
-		scrollPane = new JScrollPane();
-		scrollPane.setViewportView(table);
-		scrollPane.getViewport().setBackground(Color.WHITE);
-		scrollPane.setBorder(null);
-		add(scrollPane, "cell 4 3 11 13,grow");
-
-//		String[] colunmName = { "Ticket / Cartão", "Carro", "Placa", "Cliente", "Entrada", "Remover" };
-//		Object[][] data = { { "123456789", "FUSCA", "OCU-0800", "ADOLFO", "20/02/2020 - 20:20", false }, };
-
-//		DefaultTableModel model = new DefaultTableModel(data, colunmName);
-		InicioDefaultTableModel modelInicio = new InicioDefaultTableModel();
-//	    table = new JTable(model);
-		table = new JTable(modelInicio);
+		table = new JTable();
+		limparTabela();
 		modificacao.tabelaConfig(table);
-		scrollPane.setViewportView(table);
+		add(table, "cell 4 3 11 13,grow");
 
 		btnImprimirComprovanteTabela = new JButton("Imprimir Comprovante");
 		btnImprimirComprovanteTabela.setFont(new Font("Arial", Font.BOLD, 16));
 		btnImprimirComprovanteTabela.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		add(btnImprimirComprovanteTabela, "cell 8 17 3 2,grow");
 		btnImprimirComprovanteTabela.addActionListener(e -> {
-			
-			
+
 		});
 
 		btnRemover = new JButton("Remover Ticket / Cliente");
@@ -256,47 +254,84 @@ public class InicioView extends JPanel {
 		btnRemover.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		add(btnRemover, "cell 11 17 3 2,grow");
 		btnRemover.addActionListener(e -> {
-			
-			InicioDefaultTableModel model = (InicioDefaultTableModel) table.getModel();
-			MoveVO vo = model.getMoveVO(table.getSelectedRow());
-			msg = controller.excluirUsuarios(vo);
-			
-			JOptionPane.showConfirmDialog(this, modificacao.labelConfig(lblMetodo, msg),
-			"EXCLUIR CITKER / CARTÃO?", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
-			
-//			atualizarTable();
+
+			JOptionPane.showConfirmDialog(this, modificacao.labelConfig(lblMetodo, msg), "EXCLUIR CITKER / CARTÃO?",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+
 		});
 	}
-	
-	private void atualizarTable() {
-		InicioDefaultTableModel model = (InicioDefaultTableModel) table.getModel();
+
+	protected void atualizarTabela() {
+		ControllerInicio controller = new ControllerInicio();
+//		String text = btnProcurar.getText();
+//		movimentacoes = controller.controllerConsultarTabelaInicio(text);
+
+//		EmpregadoController controller = new EmpregadoController();
+//		empregados = controller.consultarTodos();
+
+		// Limpa a tabela
+		limparTabela();
+
+		Tester classeTeste = new Tester();
+		movimentacoes = new ArrayList<MovimentoVO>();
+//		movimentacoes.add(new MoveVO(1, 2, classeTeste.getCarro(), classeTeste.getCliente(), LocalDateTime.now(),
+//				LocalDateTime.now(), 10, false));
+//		movimentacoes.add(new MoveVO(1, 1, null, null, LocalDateTime.now(), LocalDateTime.now(), 10, false));
+
+//		movimentacoes = controller.consultarTodos();
 		
-		Object row[] = new Object[5];
-		ArrayList<MoveVO> array = new ArrayList<MoveVO>();
-		MoveVO vo = new MoveVO();
-		for (int i = 0; i < array.size(); i++) {
-			
-			row[0] = vo.getTicket_cartao();
-			row[1] = vo.getCarro().getDescricao();
-			row[2] = vo.getCarro().getPlaca();
-			row[3] = vo.getCliente().getNome();
-			row[4] = vo.getEntrada();
-			row[5] = vo.isCbx();
-			
-			model.addRow(row);
-			
+		// Obtém o model da tabela
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		// Percorre os empregados para adicionar linha a linha na tabela (JTable)
+		for (MovimentoVO movimento : movimentacoes) {
+			String[] novaLinha = new String[5];
+//			novaLinha[0] = String.valueOf(movimento.getTicket_cartao());
+//			novaLinha[1] = movimento.getCarro().getModelo();
+//			novaLinha[2] = movimento.getCarro().getPlaca();
+//			novaLinha[3] = movimento.getCliente().getNome();
+//			novaLinha[4] = String.valueOf(movimento.getEntrada().toLocalDate());
+//			novaLinha[5] = String.valueOf(movimento.isCbx()); 
+
+			// Adiciona a nova linha na tabela
+			model.addRow(novaLinha);
 		}
 	}
 
-	private void consultarTabela(ArrayList<MoveVO> vo) {
+//	private void atualizarTable() {
+//		
+//		
+//		
+//		Object row[] = new Object[5];
+//		ArrayList<MoveVO> array = new ArrayList<MoveVO>();
+//		MoveVO vo = new MoveVO();
+//		for (int i = 0; i < array.size(); i++) {
+//			
+//			row[0] = vo.getTicket_cartao();
+//			row[1] = vo.getCarro().getDescricao();
+//			row[2] = vo.getCarro().getPlaca();
+//			row[3] = vo.getCliente().getNome();
+//			row[4] = vo.getEntrada();
+//			row[5] = vo.isCbx();
+//			
+//			model.addRow(row);
+//			
+//		}
+//	}
+
+	private void limparTabela() {
+		table.setModel(new DefaultTableModel(new Object[][] { colunas, }, colunas));
+	}
+
+	private void consultarTabela(ArrayList<FluxoVO> vo) {
 		// TODO Consultar a Tabela com Seletor
 	}
 
 	/**
-	 * Criação de uma mascara para o campo, e um place holder(Palavras que somem ao digitar)
+	 * Criação de uma mascara para o campo, e um place holder(Palavras que somem ao
+	 * digitar)
 	 */
 	private void maskAndPlaceHolder() {
-		
+
 		try {
 			mf1 = new MaskFormatter("#############################################");
 			mf1.setPlaceholder("Digite o Número do Ticket");
@@ -308,5 +343,5 @@ public class InicioView extends JPanel {
 			e.getStackTrace();
 		}
 	}
-	
+
 }

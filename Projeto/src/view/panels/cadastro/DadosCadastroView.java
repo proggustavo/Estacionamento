@@ -2,15 +2,26 @@ package view.panels.cadastro;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.text.ParseException;
 
+import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.text.MaskFormatter;
 
 import net.miginfocom.swing.MigLayout;
+import util.modifications.Modificacoes;
 
 public class DadosCadastroView extends JPanel {
 
@@ -20,12 +31,15 @@ public class DadosCadastroView extends JPanel {
 	private JTextField txtRG;
 	private JTextField textField;
 	private JTextField txtTelefone;
+	private JTable table;
+	
+	private MaskFormatter mascara;
 
 	public DadosCadastroView() {
 		
 		this.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		this.setBackground(Color.WHITE);
-		this.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]"));
+		this.setLayout(new MigLayout("", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow][grow][30px][grow][10px][grow][grow][grow][grow][grow][grow]"));
 		
 		this.initialize();
 	}
@@ -95,5 +109,29 @@ public class DadosCadastroView extends JPanel {
 		chckbxBloquear.setFont(new Font("Arial", Font.BOLD, 14));
 		this.add(chckbxBloquear, "cell 0 8 2 1,grow");
 		
+
+		JLabel lblAdicionarVeculos = new JLabel("Adicionar Veículos:");
+		lblAdicionarVeculos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAdicionarVeculos.setFont(new Font("Arial", Font.BOLD, 26));
+		add(lblAdicionarVeculos, "cell 0 10 7 1,grow");
+		
+		JScrollPane scrollPane = new JScrollPane();
+		add(scrollPane, "cell 0 12 12 6,grow");
+		
+		scrollPane.setBackground(Color.WHITE);
+		scrollPane.getViewport().setBackground(Color.WHITE);
+		scrollPane.setBorder(new LineBorder(Color.BLACK, 1, true));
+
+		String[] colunmName = {"Placa", "Marca", "Modelo", "Descrição", "Codígo do Cartão" };
+		Object[][] data = { {} };
+		Modificacoes mod = new Modificacoes();
+		
+		table = new JTable(new DefaultTableModel(data, colunmName));
+		mod.tabelaConfig(table);
+		scrollPane.setViewportView(table);;
+		mod.mostrarComboBoxJTable(table, table.getColumnModel().getColumn(1));
+		mod.mostrarComboBoxJTable(table, table.getColumnModel().getColumn(2));
+		mod.maskFormJTable(table, table.getColumnModel().getColumn(0));
 	}
+	
 }

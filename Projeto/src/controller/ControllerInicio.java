@@ -1,15 +1,10 @@
 package controller;
 
-import java.util.ArrayList;
-
-import model.bo.MoveBO;
-import model.vo.MoveVO;
+import model.vo.movimentos.FluxoVO;
 
 public class ControllerInicio {
 
-	private MoveVO vo;
-	private MoveBO bo;
-	
+	private FluxoVO vo;
 	private String msg = "";
 	
 	/**
@@ -26,21 +21,10 @@ public class ControllerInicio {
 		return msg;
 	}
 	
-	public Object tableValidate(int row) {
-		return row;
-		
-		
-	}
 
-	public String excluirUsuarios(MoveVO vo) {
+	public String excluirUsuarios(FluxoVO vo) {
 		
 		return msg;
 	}
-
-	public ArrayList<MoveVO> controllerConsultarTabelaInicio(String text) {
-		return bo.boConsultarTabelaInicio(text);
-	}
-	
-	
 
 }

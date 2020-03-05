@@ -1,4 +1,4 @@
-package model.vo;
+package model.vo.cliente;
 
 public class EnderecoVO {
 
@@ -6,7 +6,7 @@ public class EnderecoVO {
 	private int numero;
 	private String rua;
 	private String bairro;
-	private String Cidade;
+	private String cidade;
 	
 	public EnderecoVO(int id, int numero, String rua, String bairro, String cidade) {
 		super();
@@ -14,7 +14,7 @@ public class EnderecoVO {
 		this.numero = numero;
 		this.rua = rua;
 		this.bairro = bairro;
-		Cidade = cidade;
+		this.cidade = cidade;
 	}
 
 	public EnderecoVO() {
@@ -54,11 +54,11 @@ public class EnderecoVO {
 	}
 
 	public String getCidade() {
-		return Cidade;
+		return cidade;
 	}
 
 	public void setCidade(String cidade) {
-		Cidade = cidade;
+		cidade = cidade;
 	}
 	
 	
