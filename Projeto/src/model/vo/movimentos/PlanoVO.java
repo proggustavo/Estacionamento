@@ -13,6 +13,10 @@ public class PlanoVO {
 		this.descircao = descircao;
 	}
 	
+	public PlanoVO() {
+		super();
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -113,7 +113,11 @@ public class CadastroView extends JPanel {
 		btnSalvar.setFont(new Font("Arial", Font.BOLD, 20));
 		btnSalvar.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		add(btnSalvar, "cell 5 16 3 2,grow");
-	
+		btnSalvar.addActionListener(e -> {
+			
+			
+		});
+		
 	}
 	
 public void swithPanel(JPanel panel) {

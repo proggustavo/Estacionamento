@@ -21,6 +21,10 @@ public class MovimentoVO {
 		this.ticket = ticket;
 	}
 
+	public MovimentoVO() {
+		super();
+	}
+
 	public int getId() {
 		return id;
 	}

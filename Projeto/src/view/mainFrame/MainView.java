@@ -20,7 +20,6 @@ import view.panels.ClienteView;
 import view.panels.InicioView;
 import view.panels.MovimentoView;
 import view.panels.TicketPerdidoView;
-import java.awt.Dimension;
 
 public class MainView extends JFrame {
 
@@ -184,11 +183,4 @@ public class MainView extends JFrame {
 		
 	}
 
-	public JLayeredPane getLayeredPane() {
-		return layeredPane;
-	}
-
-	public void setLayeredPane(JLayeredPane layeredPane) {
-		this.layeredPane = layeredPane;
-	}
 }

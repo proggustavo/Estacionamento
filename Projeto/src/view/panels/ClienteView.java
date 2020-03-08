@@ -40,7 +40,8 @@ public class ClienteView extends JPanel {
 
 	private void initialize() {
 		
-		JLabel lblSelecionar = new JLabel("<html><body>Selecione o Cliente<br>para Cadastrar ou Atualizar</body></html>");
+		String text = "<html><body>Cadastrar um Novo Cliente<br><br>Selecione a Linha para Atualizar</body></html>";
+		JLabel lblSelecionar = new JLabel(text);
 		lblSelecionar.setBackground(Color.WHITE);
 		lblSelecionar.setHorizontalAlignment(SwingConstants.LEFT);
 		lblSelecionar.setFont(new Font("Arial", Font.BOLD, 16));
@@ -77,7 +78,7 @@ public class ClienteView extends JPanel {
 		
 		JButton btnExcluir = new JButton("Excluir");
 		btnExcluir.setIcon(new ImageIcon(ClienteView.class.getResource("/img/icons8-apagar-para-sempre-38.png")));
-		btnExcluir.setFont(new Font("Arial", Font.BOLD, 14));
+		btnExcluir.setFont(new Font("Arial", Font.BOLD, 20));
 		btnExcluir.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		btnExcluir.setBackground(Color.WHITE);
 		btnExcluir.setEnabled(false);

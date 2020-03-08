@@ -13,6 +13,10 @@ public class ModeloVO {
 		this.descricao = descricao;
 		this.marca = marca;
 	}
+	
+	public ModeloVO() {
+		super();
+	}
 
 	public int getId() {
 		return id;

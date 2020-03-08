@@ -29,6 +29,10 @@ public class ContratoVO {
 		this.plano = plano;
 	}
 
+	public ContratoVO() {
+		super();
+	}
+
 	public int getId() {
 		return id;
 	}

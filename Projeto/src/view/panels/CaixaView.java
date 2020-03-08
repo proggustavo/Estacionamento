@@ -50,7 +50,8 @@ public class CaixaView extends JPanel {
 		lblSaldoEmDinheiror.setBackground(Color.WHITE);
 		add(lblSaldoEmDinheiror, "cell 10 3 2 1,grow");
 		
-		JButton btnRelatorio = new JButton("<html><body>Relatorio do<br align=Center>Último Caixa</body></html>");
+		String stringRelatorio = "<html><body>Relatorio do<br align=Center>Último Caixa</body></html>";
+		JButton btnRelatorio = new JButton(stringRelatorio);
 		btnRelatorio.setIcon(new ImageIcon(CaixaView.class.getResource("/img/icons8-enviar-para-a-impressora-50.png")));
 //		btnRelatorioDoltimo.setBackground(new Color(100, 149, 237));
 		btnRelatorio.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
@@ -97,6 +98,8 @@ public class CaixaView extends JPanel {
 		scrollPane = new JScrollPane();
 		scrollPane.setBackground(Color.WHITE);
 		scrollPane.getViewport().setBackground(Color.WHITE);
+		scrollPane.setBorder(null);
+		add(scrollPane, "cell 1 5 17 7,grow");
 		
 		JLabel lblSaldoEmCarto = new JLabel("Saldo em Cartão:");
 		lblSaldoEmCarto.setFont(new Font("Arial", Font.BOLD, 14));
@@ -109,8 +112,6 @@ public class CaixaView extends JPanel {
 		lblTotalCaixa.setFont(new Font("Arial", Font.BOLD, 14));
 		lblTotalCaixa.setBackground(Color.WHITE);
 		add(lblTotalCaixa, "cell 16 3 2 1,grow");
-		scrollPane.setBorder(null);
-		add(scrollPane, "cell 1 5 17 7,grow");
 		
 		String[] colunmName = {"Ticket / Cartão", "Descrição","Hora de Entrada", "Hora de Validação", "Forma de Pagamento", "Valor"};
 		Object[][] data = {};
@@ -120,7 +121,8 @@ public class CaixaView extends JPanel {
 		modificacao.tabelaConfig(table);
 		scrollPane.setViewportView(table);
 		
-		JButton btnImprimirComprovante = new JButton("Imprimir Comprovante");
+		String text = "<html><body align=Center>Imprimir Comprovante<br>(Linha Selecionada)</body></html>";
+		JButton btnImprimirComprovante = new JButton(text);
 		btnImprimirComprovante.setIcon(new ImageIcon(CaixaView.class.getResource("/img/icons8-impressora-de-porta-aberta-50.png")));
 		btnImprimirComprovante.setBackground(Color.WHITE);
 		btnImprimirComprovante.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));

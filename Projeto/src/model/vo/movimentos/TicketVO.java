@@ -26,6 +26,10 @@ public class TicketVO {
 		this.cliente = cliente;
 	}
 	
+	public TicketVO() {
+		super();
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import controller.ControllerInicio;
+import model.banco.Banco;
 import model.vo.Tester;
 import model.vo.movimentos.FluxoVO;
 import model.vo.movimentos.MovimentoVO;
@@ -235,23 +236,35 @@ public class InicioView extends JPanel {
 			atualizarTabela();
 		
 		});
-
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBackground(Color.WHITE);
+		scrollPane.getViewport().setBackground(Color.WHITE);
+		scrollPane.setBorder(null);
+		
+		
 		table = new JTable();
 		limparTabela();
 		modificacao.tabelaConfig(table);
-		add(table, "cell 4 3 11 13,grow");
+		scrollPane.setViewportView(table);
+		add(scrollPane, "cell 4 3 11 13,grow");
 
+		
 		btnImprimirComprovanteTabela = new JButton("Imprimir Comprovante");
 		btnImprimirComprovanteTabela.setFont(new Font("Arial", Font.BOLD, 16));
 		btnImprimirComprovanteTabela.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		btnImprimirComprovanteTabela.setToolTipText("Imprime comprovante de Clientes ou Tickets na Tabela");
 		add(btnImprimirComprovanteTabela, "cell 8 17 3 2,grow");
 		btnImprimirComprovanteTabela.addActionListener(e -> {
 
+			
+			
 		});
 
 		btnRemover = new JButton("Remover Ticket / Cliente");
 		btnRemover.setFont(new Font("Arial", Font.BOLD, 16));
 		btnRemover.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		btnRemover.setToolTipText("Remove os Clientes ou Tickets na Tabela");
 		add(btnRemover, "cell 11 17 3 2,grow");
 		btnRemover.addActionListener(e -> {
 
@@ -259,6 +272,9 @@ public class InicioView extends JPanel {
 					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
 
 		});
+		
+
+
 	}
 
 	protected void atualizarTabela() {

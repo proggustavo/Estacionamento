@@ -55,8 +55,8 @@ public class Tester {
 
 		this.cliente.setId(1);
 		this.cliente.setNome("JOAO");
-		this.cliente.setCPF("12345678910");
-		this.cliente.setRG("9888777");
+		this.cliente.setCpf("12345678910");
+		this.cliente.setRg("9888777");
 		this.cliente.setTelefone("48988776655");
 		this.cliente.setEmail("teste@email.com");
 		this.cliente.setEndereco(endereco);

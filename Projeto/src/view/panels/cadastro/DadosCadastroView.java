@@ -3,6 +3,7 @@ package view.panels.cadastro;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
@@ -16,24 +17,36 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.text.MaskFormatter;
 
 import net.miginfocom.swing.MigLayout;
 import util.modifications.Modificacoes;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
 
 public class DadosCadastroView extends JPanel {
 
 	private static final long serialVersionUID = 8795512428702538815L;
-	private JTextField txtNome;
-	private JTextField txtCpf;
-	private JTextField txtRG;
-	private JTextField textField;
-	private JTextField txtTelefone;
+	
+	private JFormattedTextField ftfNome;
+	private JFormattedTextField ftfCPF;
+	private JFormattedTextField ftfRG;
+	private JFormattedTextField txtTelefone;
+	private JTextField txtEmail;
+
 	private JTable table;
 	
-	private MaskFormatter mascara;
+	private MaskFormatter mfNome;
+	private MaskFormatter mfCPF;
+	private MaskFormatter mfRG;
+	private MaskFormatter mfFone;
+
+	private ArrayList<?> linhas;
 
 	public DadosCadastroView() {
 		
@@ -46,6 +59,7 @@ public class DadosCadastroView extends JPanel {
 
 	private void initialize() {
 		
+		mascaraEplaceHolder();
 		
 		JLabel lblNome = new JLabel("Nome *");
 		lblNome.setHorizontalAlignment(SwingConstants.CENTER);
@@ -72,32 +86,32 @@ public class DadosCadastroView extends JPanel {
 		lblTelefone.setFont(new Font("Arial", Font.BOLD, 14));
 		this.add(lblTelefone, "cell 0 6 2 1,grow");
 		
-		txtNome = new JTextField();
-		txtNome.setBorder(new LineBorder(Color.BLACK, 1, true));
-		txtNome.setFont(new Font("Arial", Font.BOLD, 14));
-		this.add(txtNome, "cell 2 1 3 1,grow");
-		txtNome.setColumns(10);
+		ftfNome = new JFormattedTextField();
+		ftfNome.setBorder(new LineBorder(Color.BLACK, 1, true));
+		ftfNome.setFont(new Font("Arial", Font.BOLD, 14));
+		this.add(ftfNome, "cell 2 1 3 1,grow");
+		ftfNome.setColumns(10);
 		
-		txtCpf = new JTextField();
-		txtCpf.setBorder(new LineBorder(Color.BLACK, 1, true));
-		txtCpf.setFont(new Font("Arial", Font.BOLD, 14));
-		txtCpf.setHorizontalAlignment(SwingConstants.LEFT);
-		this.add(txtCpf, "cell 2 2 3 1,grow");
-		txtCpf.setColumns(10);
+		ftfCPF = new JFormattedTextField();
+		ftfCPF.setBorder(new LineBorder(Color.BLACK, 1, true));
+		ftfCPF.setFont(new Font("Arial", Font.BOLD, 14));
+		ftfCPF.setHorizontalAlignment(SwingConstants.LEFT);
+		this.add(ftfCPF, "cell 2 2 3 1,grow");
+		ftfCPF.setColumns(10);
 		
-		txtRG = new JTextField();
-		txtRG.setFont(new Font("Arial", Font.BOLD, 14));
-		txtRG.setBorder(new LineBorder(Color.BLACK, 1, true));
-		this.add(txtRG, "cell 2 3 3 1,grow");
-		txtRG.setColumns(10);
+		ftfRG = new JFormattedTextField();
+		ftfRG.setFont(new Font("Arial", Font.BOLD, 14));
+		ftfRG.setBorder(new LineBorder(Color.BLACK, 1, true));
+		this.add(ftfRG, "cell 2 3 3 1,grow");
+		ftfRG.setColumns(10);
 		
-		textField = new JTextField();
-		textField.setBorder(new LineBorder(Color.BLACK, 1, true));
-		textField.setFont(new Font("Arial", Font.BOLD, 14));
-		this.add(textField, "cell 2 5 3 1,grow");
-		textField.setColumns(10);
+		txtEmail = new JTextField();
+		txtEmail.setBorder(new LineBorder(Color.BLACK, 1, true));
+		txtEmail.setFont(new Font("Arial", Font.BOLD, 14));
+		this.add(txtEmail, "cell 2 5 3 1,grow");
+		txtEmail.setColumns(10);
 		
-		txtTelefone = new JTextField();
+		txtTelefone = new JFormattedTextField();
 		txtTelefone.setFont(new Font("Arial", Font.BOLD, 14));
 		txtTelefone.setBorder(new LineBorder(Color.BLACK, 1, true));
 		this.add(txtTelefone, "cell 2 6 3 1,grow");
@@ -109,11 +123,22 @@ public class DadosCadastroView extends JPanel {
 		chckbxBloquear.setFont(new Font("Arial", Font.BOLD, 14));
 		this.add(chckbxBloquear, "cell 0 8 2 1,grow");
 		
+		JButton btnAddRow = new JButton("Add Row Test");
+		add(btnAddRow, "cell 0 10 2 1,grow");
+		btnAddRow.addActionListener(e -> {
+			
+			linhas = new ArrayList<>();
+			DefaultTableModel model =  (DefaultTableModel) table.getModel();
+			Object[] data = linhas.toArray();
+			model.addRow(data);
+			
+		});
+		
 
 		JLabel lblAdicionarVeculos = new JLabel("Adicionar Veículos:");
 		lblAdicionarVeculos.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAdicionarVeculos.setFont(new Font("Arial", Font.BOLD, 26));
-		add(lblAdicionarVeculos, "cell 0 10 7 1,grow");
+		add(lblAdicionarVeculos, "cell 2 10 3 1,grow");
 		
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "cell 0 12 12 6,grow");
@@ -128,10 +153,52 @@ public class DadosCadastroView extends JPanel {
 		
 		table = new JTable(new DefaultTableModel(data, colunmName));
 		mod.tabelaConfig(table);
-		scrollPane.setViewportView(table);;
+		scrollPane.setViewportView(table);
 		mod.mostrarComboBoxJTable(table, table.getColumnModel().getColumn(1));
 		mod.mostrarComboBoxJTable(table, table.getColumnModel().getColumn(2));
 		mod.maskFormJTable(table, table.getColumnModel().getColumn(0));
+		
+//			table.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				if (e.getClickCount() == MouseEvent.BUTTON2) {
+//					
+//					DefaultTableModel model = (DefaultTableModel) table.getModel();
+//					model.addRow(data);
+//					
+//					linhas = new ArrayList<>();
+//					DefaultTableModel model =  (DefaultTableModel) table.getModel();
+//					Object[] data = linhas.toArray();
+//					model.addRow(data);
+//		
+//				}
+//			}
+//		});
+	
+	}
+	
+	private void mascaraEplaceHolder(){
+		
+		try {
+			mfNome = new MaskFormatter("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL"
+			+ "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+			mfNome.setPlaceholder("Digite o CPF");
+			
+			mfCPF = new MaskFormatter("##############");
+			mfCPF.setPlaceholder("Digite o CPF");
+			
+			mfRG = new MaskFormatter("##############");
+			mfRG.setPlaceholder("Digite o RG");
+			
+			mfFone = new MaskFormatter("(##) #-####-####");
+			mfFone.setPlaceholder("Digite o Telefone");
+			
+		} catch (ParseException e) {
+			e.getMessage();
+			e.printStackTrace();
+			e.getStackTrace();
+		}
+		
 	}
 	
 }

@@ -15,6 +15,10 @@ public class CarroVO {
 		this.cor = cor;
 		this.modelo = modelo;
 	}
+	
+	public CarroVO() {
+		super();
+	}
 
 	public int getId() {
 		return id;
