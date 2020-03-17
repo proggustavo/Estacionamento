@@ -13,10 +13,10 @@ import model.seletor.Seletor;
 import model.vo.veiculo.CarroVO;
 import model.vo.veiculo.ModeloVO;
 
-public class CarroDAO implements BaseDAO<Object>{
+public class CarroDAO implements BaseDAO<CarroVO>{
 
 	@Override
-	public Object criarResultSet(ResultSet result) {
+	public CarroVO criarResultSet(ResultSet result) {
 		CarroVO carro = null;
 
 		try {
@@ -37,15 +37,16 @@ public class CarroDAO implements BaseDAO<Object>{
 			carro.setCor(result.getString("cor"));
 			
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: criarResultSet()");
 			System.out.println();
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		}
 
 		return carro;
@@ -63,19 +64,20 @@ public class CarroDAO implements BaseDAO<Object>{
 		try {
 			result = stmt.executeQuery(qry);
 			while (result.next()) {
-				CarroVO vo = (CarroVO) criarResultSet(result);
+				CarroVO vo = criarResultSet(result);
 				lista.add(vo);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: consultarTodos()");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closeStatement(stmt);
@@ -105,15 +107,16 @@ public class CarroDAO implements BaseDAO<Object>{
 				lista.add(vo);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/*********************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: consultar()");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/*********************************************************/");
+			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closePreparedStatement(stmt);
@@ -123,8 +126,8 @@ public class CarroDAO implements BaseDAO<Object>{
 	}
 
 	@Override
-	public Object consultarPorId(int id) {
-		String qry = " SELECT * FROM CARRO WHERE ID=? ";
+	public CarroVO consultarPorId(int id) {
+		String qry = " SELECT * FROM CARRO WHERE IDCARRO = ? ";
 		CarroVO carro = null;
 		
 		Connection conn = Banco.getConnection();
@@ -137,18 +140,19 @@ public class CarroDAO implements BaseDAO<Object>{
 			result = stmt.executeQuery(qry);
 			
 			while (result.next()) {
-				carro = (CarroVO) criarResultSet(result);
+				carro = criarResultSet(result);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: consultarPorID()");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closePreparedStatement(stmt);
@@ -159,13 +163,13 @@ public class CarroDAO implements BaseDAO<Object>{
 	}
 
 	@Override
-	public Object cadastrar(Object object) {
+	public CarroVO cadastrar(CarroVO CarroVO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean alterar(Object obj) {
+	public boolean alterar(CarroVO obj) {
 		// TODO Auto-generated method stub
 		return false;
 	}

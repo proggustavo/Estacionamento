@@ -11,10 +11,10 @@ import model.banco.BaseDAO;
 import model.seletor.Seletor;
 import model.vo.cliente.EnderecoVO;
 
-public class EnderecoDAO implements BaseDAO<Object> {
+public class EnderecoDAO implements BaseDAO<EnderecoVO> {
 
 	@Override
-	public Object criarResultSet(ResultSet result) {
+	public EnderecoVO criarResultSet(ResultSet result) {
 		
 		EnderecoVO endereco = null;
 		
@@ -28,15 +28,15 @@ public class EnderecoDAO implements BaseDAO<Object> {
 			endereco.setCidade(result.getString("cidade"));
 			
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass());
 			System.out.println("Method: cirarResultSet()");
-			System.out.println();
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		}
 		return endereco;
 	}
@@ -54,17 +54,20 @@ public class EnderecoDAO implements BaseDAO<Object> {
 		try {
 			result = stmt.executeQuery(qry);
 			while (result.next()) {
-				EnderecoVO e = (EnderecoVO) criarResultSet(result);
+				EnderecoVO e = criarResultSet(result);
 				lista.add(e);
 			}
 		} catch (SQLException e) {
+			System.out.println();
+			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass());
 			System.out.println("Method: consultarTodos()");
+			System.out.println(qry);
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
+			System.out.println("/****************************************************************/");
 			System.out.println();
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closePreparedStatement(stmt);
@@ -75,16 +78,16 @@ public class EnderecoDAO implements BaseDAO<Object> {
 	}
 
 	@Override
-	public ArrayList<Object> consultar(Seletor seletor) {
+	public ArrayList<EnderecoVO> consultar(Seletor seletor) {
 //		String qry = " SELECT * FROM ENDERECO WHERE RUA = '" + text.toUpperCase() + "' ";
 
 		return null;
 	}
 
 	@Override
-	public Object consultarPorId(int id) {
+	public EnderecoVO consultarPorId(int id) {
 		
-		String qry = " SELECT * FROM ENDERECO WHERE ID=?";
+		String qry = " SELECT * FROM ENDERECO WHERE IDENDERECO = ? ";
 		EnderecoVO endereco = null;
 		
 		Connection conexao = Banco.getConnection();
@@ -97,17 +100,20 @@ public class EnderecoDAO implements BaseDAO<Object> {
 			result = stmt.executeQuery(qry);
 			
 			while (result.next()) {
-				endereco = (EnderecoVO) criarResultSet(result);
+				endereco = criarResultSet(result);
 			}
 			
 		} catch (SQLException e) {
+			System.out.println();
+			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass());
 			System.out.println("Method: consultarPorID()");
+			System.out.println(qry);
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
+			System.out.println("/****************************************************************/");
 			System.out.println();
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closePreparedStatement(stmt);
@@ -118,13 +124,13 @@ public class EnderecoDAO implements BaseDAO<Object> {
 	}
 
 	@Override
-	public Object cadastrar(Object object) {
+	public EnderecoVO cadastrar(EnderecoVO EnderecoVO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean alterar(Object entidade) {
+	public boolean alterar(EnderecoVO entidade) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -26,9 +26,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import controller.ControllerInicio;
-import model.banco.Banco;
-import model.vo.Tester;
-import model.vo.movimentos.FluxoVO;
+import model.bo.MovimentoBO;
 import model.vo.movimentos.MovimentoVO;
 import net.miginfocom.swing.MigLayout;
 import util.modifications.Modificacoes;
@@ -61,7 +59,6 @@ public class InicioView extends JPanel {
 	private JLabel lblMetodo;
 
 	private String[] colunas = new String[] { "Ticket / Cartão", "Carro", "Placa", "Cliente", "Entrada" };
-	private ArrayList<MovimentoVO> movimentacoes;
 
 	private String msg;
 
@@ -176,7 +173,7 @@ public class InicioView extends JPanel {
 		btnValidar.addActionListener(e -> {
 
 //			modificacao.joptionConfig(1, this, mensagem, "VALIDAÇÃO", Modificacoes.JOPTION_ATENCAO,
-//					Modificacoes.JOPTION_K_C, null, null);
+//			Modificacoes.JOPTION_K_C, null, null);
 
 			String ticket = txtTicket.getText().trim();
 			controller = new ControllerInicio();
@@ -220,36 +217,24 @@ public class InicioView extends JPanel {
 		btnProcurar.setBackground(new Color(100, 149, 237));
 		splitPane.setLeftComponent(btnProcurar);
 		btnProcurar.addActionListener(e -> {
+			MovimentoBO bo = new MovimentoBO();
+			ArrayList<MovimentoVO> vo = bo.consultarTodos();
+			atualizarTabela(vo);
 
-//			String procurar = txtProcurar.getText();
-//			controller.validate(procurar);
+//			limparTabela();
 
-			// TODO Passar a pesquisa para a jtable com seletor
-//			String text = txtProcurar.getText();
-//			ControllerInicio controller = new ControllerInicio();
-//			ArrayList<MoveVO> vo = controller.controllerConsultarTabelaInicio(text);
-
-//			consultarTabela(vo);
-
-		
-		
-			atualizarTabela();
-		
 		});
-		
+
 		scrollPane = new JScrollPane();
 		scrollPane.setBackground(Color.WHITE);
 		scrollPane.getViewport().setBackground(Color.WHITE);
 		scrollPane.setBorder(null);
-		
-		
+
 		table = new JTable();
-		limparTabela();
 		modificacao.tabelaConfig(table);
 		scrollPane.setViewportView(table);
 		add(scrollPane, "cell 4 3 11 13,grow");
 
-		
 		btnImprimirComprovanteTabela = new JButton("Imprimir Comprovante");
 		btnImprimirComprovanteTabela.setFont(new Font("Arial", Font.BOLD, 16));
 		btnImprimirComprovanteTabela.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
@@ -257,8 +242,6 @@ public class InicioView extends JPanel {
 		add(btnImprimirComprovanteTabela, "cell 8 17 3 2,grow");
 		btnImprimirComprovanteTabela.addActionListener(e -> {
 
-			
-			
 		});
 
 		btnRemover = new JButton("Remover Ticket / Cliente");
@@ -272,41 +255,24 @@ public class InicioView extends JPanel {
 					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
 
 		});
-		
-
 
 	}
 
-	protected void atualizarTabela() {
-		ControllerInicio controller = new ControllerInicio();
-//		String text = btnProcurar.getText();
-//		movimentacoes = controller.controllerConsultarTabelaInicio(text);
-
-//		EmpregadoController controller = new EmpregadoController();
-//		empregados = controller.consultarTodos();
+	protected void atualizarTabela(ArrayList<MovimentoVO> vo) {
 
 		// Limpa a tabela
 		limparTabela();
 
-		Tester classeTeste = new Tester();
-		movimentacoes = new ArrayList<MovimentoVO>();
-//		movimentacoes.add(new MoveVO(1, 2, classeTeste.getCarro(), classeTeste.getCliente(), LocalDateTime.now(),
-//				LocalDateTime.now(), 10, false));
-//		movimentacoes.add(new MoveVO(1, 1, null, null, LocalDateTime.now(), LocalDateTime.now(), 10, false));
-
-//		movimentacoes = controller.consultarTodos();
-		
 		// Obtém o model da tabela
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		// Percorre os empregados para adicionar linha a linha na tabela (JTable)
-		for (MovimentoVO movimento : movimentacoes) {
-			String[] novaLinha = new String[5];
-//			novaLinha[0] = String.valueOf(movimento.getTicket_cartao());
-//			novaLinha[1] = movimento.getCarro().getModelo();
-//			novaLinha[2] = movimento.getCarro().getPlaca();
-//			novaLinha[3] = movimento.getCliente().getNome();
-//			novaLinha[4] = String.valueOf(movimento.getEntrada().toLocalDate());
-//			novaLinha[5] = String.valueOf(movimento.isCbx()); 
+		Object[] novaLinha = new Object[5];
+		for (MovimentoVO movimento : vo) {
+			novaLinha[0] = String.valueOf(movimento.getTicket().getNumero());
+			novaLinha[1] = movimento.getTicket().getCliente().getCarro().getModelo().getDescricao();
+			novaLinha[2] = movimento.getTicket().getCliente().getCarro().getPlaca();	
+			novaLinha[3] = movimento.getTicket().getCliente().getNome();
+			novaLinha[4] = String.valueOf(movimento.getHr_entrada().toLocalDate());
 
 			// Adiciona a nova linha na tabela
 			model.addRow(novaLinha);
@@ -335,12 +301,12 @@ public class InicioView extends JPanel {
 //	}
 
 	private void limparTabela() {
-		table.setModel(new DefaultTableModel(new Object[][] { colunas, }, colunas));
+		table.setModel(new DefaultTableModel(new Object[][] { colunas }, colunas));
 	}
 
-	private void consultarTabela(ArrayList<FluxoVO> vo) {
+//	private void consultarTabela(ArrayList<FluxoVO> vo) {
 		// TODO Consultar a Tabela com Seletor
-	}
+//	}
 
 	/**
 	 * Criação de uma mascara para o campo, e um place holder(Palavras que somem ao

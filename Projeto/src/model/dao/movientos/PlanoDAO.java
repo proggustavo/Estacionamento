@@ -12,10 +12,10 @@ import model.banco.BaseDAO;
 import model.seletor.Seletor;
 import model.vo.movimentos.PlanoVO;
 
-public class PlanoDAO implements BaseDAO<Object> {
+public class PlanoDAO implements BaseDAO<PlanoVO> {
 
 	@Override
-	public Object criarResultSet(ResultSet result) {
+	public PlanoVO criarResultSet(ResultSet result) {
 		PlanoVO plano = new PlanoVO();
 
 		try {
@@ -25,17 +25,16 @@ public class PlanoDAO implements BaseDAO<Object> {
 			plano.setDescircao(result.getString("descricao"));
 
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: criarResultSet()");
 			System.out.println();
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
-			;
-
+			System.out.println();
 		}
 
 		return plano;
@@ -53,19 +52,20 @@ public class PlanoDAO implements BaseDAO<Object> {
 		try {
 			result = stmt.executeQuery(qry);
 			while (result.next()) {
-				PlanoVO vo = (PlanoVO) criarResultSet(result);
+				PlanoVO vo = criarResultSet(result);
 				lista.add(vo);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: consultarTodos()");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closeStatement(stmt);
@@ -81,8 +81,8 @@ public class PlanoDAO implements BaseDAO<Object> {
 	}
 
 	@Override
-	public Object consultarPorId(int id) {
-		String qry = " SELECT * FROM PLANO WHERE ID=? ";
+	public PlanoVO consultarPorId(int id) {
+		String qry = " SELECT * FROM PLANO WHERE IDPLANO = ? ";
 		PlanoVO plano = null;
 
 		Connection conexao = Banco.getConnection();
@@ -95,18 +95,19 @@ public class PlanoDAO implements BaseDAO<Object> {
 			result = stmt.executeQuery(qry);
 			
 			while (result.next()) {
-				plano = (PlanoVO) criarResultSet(result);
+				plano = criarResultSet(result);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: consultarPorId");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closePreparedStatement(stmt);
@@ -117,13 +118,13 @@ public class PlanoDAO implements BaseDAO<Object> {
 	}
 
 	@Override
-	public Object cadastrar(Object object) {
+	public PlanoVO cadastrar(PlanoVO PlanoVO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean alterar(Object obj) {
+	public boolean alterar(PlanoVO obj) {
 		// TODO Auto-generated method stub
 		return false;
 	}

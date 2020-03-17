@@ -13,10 +13,10 @@ import model.seletor.Seletor;
 import model.vo.movimentos.FluxoVO;
 import model.vo.movimentos.MovimentoVO;
 
-public class FluxoDAO implements BaseDAO<Object> {
+public class FluxoDAO implements BaseDAO<FluxoVO> {
 
 	@Override
-	public Object criarResultSet(ResultSet result) {
+	public FluxoVO criarResultSet(ResultSet result) {
 		FluxoVO fluxo = new FluxoVO();
 
 		try {
@@ -25,21 +25,19 @@ public class FluxoDAO implements BaseDAO<Object> {
 			
 			int id = result.getInt("idmovimento");
 			MovimentoDAO movimentoDAO = new MovimentoDAO();
-			MovimentoVO movimentoVO = (MovimentoVO) movimentoDAO.consultarPorId(id);
+			MovimentoVO movimentoVO = movimentoDAO.consultarPorId(id);
 			fluxo.setMovimento(movimentoVO);
 
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: criarResultSet()");
-			System.out.println();
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
-			;
-
+			System.out.println();
 		}
 
 		return fluxo;
@@ -57,19 +55,20 @@ public class FluxoDAO implements BaseDAO<Object> {
 		try {
 			result = stmt.executeQuery(qry);
 			while (result.next()) {
-				FluxoVO vo = (FluxoVO) criarResultSet(result);
+				FluxoVO vo = criarResultSet(result);
 				lista.add(vo);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: consultarTodos()");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closeStatement(stmt);
@@ -85,8 +84,8 @@ public class FluxoDAO implements BaseDAO<Object> {
 	}
 
 	@Override
-	public Object consultarPorId(int id) {
-		String qry = " SELECT * FROM FLUXO WHERE ID=? ";
+	public FluxoVO consultarPorId(int id) {
+		String qry = " SELECT * FROM FLUXO WHERE IDFLUXO = ? ";
 		FluxoVO fluxo = null;
 
 		Connection conexao = Banco.getConnection();
@@ -99,18 +98,19 @@ public class FluxoDAO implements BaseDAO<Object> {
 			result = stmt.executeQuery(qry);
 			
 			while (result.next()) {
-				fluxo = (FluxoVO) criarResultSet(result);
+				fluxo = criarResultSet(result);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: consultarPorId");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closePreparedStatement(stmt);
@@ -121,13 +121,13 @@ public class FluxoDAO implements BaseDAO<Object> {
 	}
 
 	@Override
-	public Object cadastrar(Object object) {
+	public FluxoVO cadastrar(FluxoVO FluxoVO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean alterar(Object object) {
+	public boolean alterar(FluxoVO FluxoVO) {
 		// TODO Auto-generated method stub
 		return false;
 	}

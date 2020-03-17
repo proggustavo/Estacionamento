@@ -13,34 +13,33 @@ import model.seletor.Seletor;
 import model.vo.veiculo.MarcaVO;
 import model.vo.veiculo.ModeloVO;
 
-public class ModeloDAO implements BaseDAO<Object> {
+public class ModeloDAO implements BaseDAO<ModeloVO> {
 
 	@Override
-	public Object criarResultSet(ResultSet result) {
+	public ModeloVO criarResultSet(ResultSet result) {
 		ModeloVO vo = null;
 
 		try {
 			vo = new ModeloVO();
 			vo.setId(result.getInt("idmodelo"));
-			;
 
 			int idMarca = result.getInt("idmarca");
 			MarcaDAO marcaDAO = new MarcaDAO();
-			MarcaVO marcaVO = (MarcaVO) marcaDAO.consultarPorId(idMarca);
+			MarcaVO marcaVO = marcaDAO.consultarPorId(idMarca);
 
 			vo.setMarca(marcaVO);
 			vo.setDescricao(result.getString("descricao"));
 
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: criarResultSet()");
-			System.out.println();
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		}
 		return vo;
 	}
@@ -57,19 +56,20 @@ public class ModeloDAO implements BaseDAO<Object> {
 		try {
 			result = stmt.executeQuery(qry);
 			while (result.next()) {
-				ModeloVO vo = (ModeloVO) criarResultSet(result);
+				ModeloVO vo = criarResultSet(result);
 				lista.add(vo);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: consultarTodos()");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closeStatement(stmt);
@@ -95,19 +95,20 @@ public class ModeloDAO implements BaseDAO<Object> {
 		try {
 			result = stmt.executeQuery(qry);
 			while (result.next()) {
-				ModeloVO modelo = (ModeloVO) criarResultSet(result);
+				ModeloVO modelo = criarResultSet(result);
 				lista.add(modelo);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/*********************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: consultar()");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/*********************************************************/");
+			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closePreparedStatement(stmt);
@@ -118,9 +119,9 @@ public class ModeloDAO implements BaseDAO<Object> {
 	}
 
 	@Override
-	public Object consultarPorId(int id) {
+	public ModeloVO consultarPorId(int id) {
 
-		String qry = " SELECT * FROM MARCA WHERE ID=? ";
+		String qry = " SELECT * FROM MODELO WHERE IDMODELO = ? ";
 		ModeloVO modelo = null;
 
 		Connection conn = Banco.getConnection();
@@ -133,18 +134,19 @@ public class ModeloDAO implements BaseDAO<Object> {
 			result = stmt.executeQuery(qry);
 
 			while (result.next()) {
-				modelo = (ModeloVO) criarResultSet(result);
+				modelo = criarResultSet(result);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: consultarPorID");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closePreparedStatement(stmt);
@@ -155,13 +157,13 @@ public class ModeloDAO implements BaseDAO<Object> {
 	}
 
 	@Override
-	public Object cadastrar(Object object) {
+	public ModeloVO cadastrar(ModeloVO ModeloVO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean alterar(Object entidade) {
+	public boolean alterar(ModeloVO entidade) {
 		// TODO Auto-generated method stub
 		return false;
 	}

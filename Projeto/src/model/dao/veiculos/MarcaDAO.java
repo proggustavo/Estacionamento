@@ -12,10 +12,10 @@ import model.banco.BaseDAO;
 import model.seletor.Seletor;
 import model.vo.veiculo.MarcaVO;
 
-public class MarcaDAO implements BaseDAO<Object> {
+public class MarcaDAO implements BaseDAO<MarcaVO> {
 
 	@Override
-	public Object criarResultSet(ResultSet result) {
+	public MarcaVO criarResultSet(ResultSet result) {
 		MarcaVO vo = null;
 
 		try {
@@ -25,15 +25,15 @@ public class MarcaDAO implements BaseDAO<Object> {
 			vo.setMarca(result.getString("nome"));
 
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: criarResultSet()");
-			System.out.println();
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		}
 
 		return vo;
@@ -51,20 +51,21 @@ public class MarcaDAO implements BaseDAO<Object> {
 		try {
 			result = stmt.executeQuery(qry);
 			while (result.next()) {
-				MarcaVO vo = (MarcaVO) criarResultSet(result);
+				MarcaVO vo = criarResultSet(result);
 				lista.add(vo);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/*********************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: listarTodos()");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/*********************************************************/");
-
+			System.out.println();
+		} finally {
 			Banco.closeResultSet(result);
 			Banco.closeStatement(stmt);
 			Banco.closeConnection(conn);
@@ -90,19 +91,20 @@ public class MarcaDAO implements BaseDAO<Object> {
 		try {
 			result = stmt.executeQuery(qry);
 			while (result.next()) {
-				MarcaVO marca = (MarcaVO) criarResultSet(result);
+				MarcaVO marca = criarResultSet(result);
 				lista.add(marca);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/*********************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: listarTodos()");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/*********************************************************/");
+			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closePreparedStatement(stmt);
@@ -113,9 +115,9 @@ public class MarcaDAO implements BaseDAO<Object> {
 	}
 
 	@Override
-	public Object consultarPorId(int id) {
+	public MarcaVO consultarPorId(int id) {
 
-		String qry = " SELECT * FROM MARCA WHERE ID=? ";
+		String qry = " SELECT * FROM MARCA WHERE IDMARCA = ? ";
 		MarcaVO marca = null;
 
 		Connection conexao = Banco.getConnection();
@@ -128,18 +130,19 @@ public class MarcaDAO implements BaseDAO<Object> {
 			result = stmt.executeQuery(qry);
 			
 			while (result.next()) {
-				marca = (MarcaVO) criarResultSet(result);
+				marca = criarResultSet(result);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: consultarPorId()");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closePreparedStatement(stmt);
@@ -150,13 +153,13 @@ public class MarcaDAO implements BaseDAO<Object> {
 	}
 
 	@Override
-	public Object cadastrar(Object object) {
+	public MarcaVO cadastrar(MarcaVO MarcaVO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean alterar(Object entidade) {
+	public boolean alterar(MarcaVO entidade) {
 		// TODO Auto-generated method stub
 		return false;
 	}

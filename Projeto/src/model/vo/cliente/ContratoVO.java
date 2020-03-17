@@ -7,7 +7,7 @@ import model.vo.movimentos.PlanoVO;
 public class ContratoVO {
 	
 	private int id;
-	private long n_cartao;
+	private long numeroCartao;
 	private LocalDateTime dtEntrada;
 	private LocalDateTime dtSaida;
 	private boolean ativo;
@@ -16,11 +16,11 @@ public class ContratoVO {
 	private ClienteVO cliente;
 	private PlanoVO plano;
 	
-	public ContratoVO(int id, long n_cartao, LocalDateTime dtEntrada, LocalDateTime dtSaida, boolean ativo,
+	public ContratoVO(int id, long numeroCartao, LocalDateTime dtEntrada, LocalDateTime dtSaida, boolean ativo,
 			double valor, ClienteVO cliente, PlanoVO plano) {
 		super();
 		this.id = id;
-		this.n_cartao = n_cartao;
+		this.numeroCartao = numeroCartao;
 		this.dtEntrada = dtEntrada;
 		this.dtSaida = dtSaida;
 		this.ativo = ativo;
@@ -41,12 +41,12 @@ public class ContratoVO {
 		this.id = id;
 	}
 
-	public long getN_cartao() {
-		return n_cartao;
+	public long getNumeroCartao() {
+		return numeroCartao;
 	}
 
-	public void setN_cartao(long n_cartao) {
-		this.n_cartao = n_cartao;
+	public void setNumeroCartao(long numeroCartao) {
+		this.numeroCartao = numeroCartao;
 	}
 
 	public LocalDateTime getDtEntrada() {

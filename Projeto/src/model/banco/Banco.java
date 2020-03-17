@@ -58,7 +58,7 @@ import java.sql.Statement;
 public class Banco {
 
 	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	private static final String BANCO = "Java_Programs";
+	private static final String BANCO = "dbestacionamento";
 	private static final String CONEXAO = "jdbc:mysql://localhost:3306/" + BANCO
 			+ "?useTimezone=true&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull";
 	private static final String USUARIO = "root";
@@ -91,6 +91,10 @@ public class Banco {
 			return null;
 		} catch (SQLException e) {
 			System.out.println("Erro ao obter a Connection. Causa: " + e.getMessage());
+			System.out.println(e);
+			System.out.println("Código: " + e.getErrorCode());
+			System.out.println("Status SQL: " + e.getSQLState());
+			System.out.println("Next Exception: " + e.getNextException());
 			return null;
 		}
 	}

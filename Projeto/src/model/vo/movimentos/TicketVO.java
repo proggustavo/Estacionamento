@@ -7,22 +7,18 @@ import model.vo.cliente.ClienteVO;
 public class TicketVO {
 
 	private int id;
-	private long n_ticket;
+	private long numero;
 	private double valor;
-	private LocalDateTime hr_validacao;
-	private LocalDateTime dtEntrada;
-	private LocalDateTime dtSaida;
+	private LocalDateTime dataValidacao;
 	private ClienteVO cliente;
 	
-	public TicketVO(int id, long n_ticket, double valor, LocalDateTime hr_validacao, LocalDateTime dtEntrada,
+	public TicketVO(int id, long numero, double valor, LocalDateTime dataValidacao, LocalDateTime dtEntrada,
 			LocalDateTime dtSaida, ClienteVO cliente) {
 		super();
 		this.id = id;
-		this.n_ticket = n_ticket;
+		this.numero = numero;
 		this.valor = valor;
-		this.hr_validacao = hr_validacao;
-		this.dtEntrada = dtEntrada;
-		this.dtSaida = dtSaida;
+		this.dataValidacao = dataValidacao;
 		this.cliente = cliente;
 	}
 	
@@ -38,12 +34,12 @@ public class TicketVO {
 		this.id = id;
 	}
 	
-	public long getN_ticket() {
-		return n_ticket;
+	public long getNumero() {
+		return numero;
 	}
 	
-	public void setN_ticket(long n_ticket) {
-		this.n_ticket = n_ticket;
+	public void setNumero(long numero) {
+		this.numero = numero;
 	}
 	
 	public double getValor() {
@@ -54,36 +50,20 @@ public class TicketVO {
 		this.valor = valor;
 	}
 	
-	public LocalDateTime getHr_validacao() {
-		return hr_validacao;
-	}
-	
-	public void setHr_validacao(LocalDateTime hr_validacao) {
-		this.hr_validacao = hr_validacao;
-	}
-	
-	public LocalDateTime getDtEntrada() {
-		return dtEntrada;
-	}
-	
-	public void setDtEntrada(LocalDateTime dtEntrada) {
-		this.dtEntrada = dtEntrada;
-	}
-	
-	public LocalDateTime getDtSaida() {
-		return dtSaida;
-	}
-	
-	public void setDtSaida(LocalDateTime dtSaida) {
-		this.dtSaida = dtSaida;
-	}
-	
 	public ClienteVO getCliente() {
 		return cliente;
 	}
 	
 	public void setCliente(ClienteVO cliente) {
 		this.cliente = cliente;
+	}
+
+	public LocalDateTime getDataValidacao() {
+		return dataValidacao;
+	}
+
+	public void setDataValidacao(LocalDateTime dataValidacao) {
+		this.dataValidacao = dataValidacao;
 	}
 	
 

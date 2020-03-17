@@ -15,48 +15,42 @@ import model.vo.cliente.ClienteVO;
 import model.vo.cliente.ContratoVO;
 import model.vo.movimentos.PlanoVO;
 
-public class ContratoDAO implements BaseDAO<Object>{
+public class ContratoDAO implements BaseDAO<ContratoVO> {
 
 	@Override
-	public Object criarResultSet(ResultSet result) {
+	public ContratoVO criarResultSet(ResultSet result) {
 		ContratoVO contrato = new ContratoVO();
 
 		try {
 
 			contrato.setId(result.getInt("idcontrato"));
-			
+
 			int idPlano = result.getInt("idplano");
 			PlanoDAO planoDAO = new PlanoDAO();
 			PlanoVO planoVO = (PlanoVO) planoDAO.consultarPorId(idPlano);
 			contrato.setPlano(planoVO);
-			
+
 			int idCliente = result.getInt("idcliente");
 			ClienteDAO clienteDAO = new ClienteDAO();
-			ClienteVO clienteVO = (ClienteVO) clienteDAO.consultarPorId(idCliente);
+			ClienteVO clienteVO = clienteDAO.consultarPorId(idCliente);
 			contrato.setCliente(clienteVO);
-			
-//			Date dt_entrada = result.getDate("dt_entrada");
-//			Date dt_saida = result.getDate("dt_saida");
-//			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//			LocalDateTime local_dt_entrada = LocalDateTime.parse((CharSequence) dt_entrada, dtf);
-//			LocalDateTime local_dt_saida = LocalDateTime.parse((CharSequence) dt_saida, dtf);
-//			
-			contrato.setDtEntrada(result.getTimestamp("hr_entrada").toLocalDateTime());
-			contrato.setDtSaida(result.getTimestamp("hr_saida").toLocalDateTime());
-			contrato.setAtivo(result.getBoolean("ativo"));
-			contrato.setN_cartao(result.getLong("n_cartao"));
+
+			contrato.setNumeroCartao(result.getLong("n_cartao"));
+			contrato.setDtEntrada(result.getTimestamp("dt_entrada").toLocalDateTime());
+			contrato.setDtSaida(result.getTimestamp("dt_saida").toLocalDateTime());
 			contrato.setValor(result.getDouble("valor"));
-			
+			contrato.setAtivo(result.getBoolean("ativo"));
+
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: criarResultSet()");
-			System.out.println();
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 			;
 
 		}
@@ -76,7 +70,7 @@ public class ContratoDAO implements BaseDAO<Object>{
 		try {
 			result = stmt.executeQuery(qry);
 			while (result.next()) {
-				ContratoVO vo = (ContratoVO) criarResultSet(result);
+				ContratoVO vo = criarResultSet(result);
 				lista.add(vo);
 			}
 		} catch (SQLException e) {
@@ -84,10 +78,9 @@ public class ContratoDAO implements BaseDAO<Object>{
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: consultarTodos()");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
 		} finally {
 			Banco.closeResultSet(result);
@@ -104,32 +97,33 @@ public class ContratoDAO implements BaseDAO<Object>{
 	}
 
 	@Override
-	public Object consultarPorId(int id) {
-		String qry = " SELECT * FROM CONTRATO WHERE ID=? ";
+	public ContratoVO consultarPorId(int id) {
+		String qry = " SELECT * FROM CONTRATO WHERE IDCONTRATO = ? ";
 		ContratoVO contrato = null;
-		
+
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, qry);
 		ResultSet result = null;
-		
+
 		try {
-			
+
 			stmt.setInt(1, id);
 			result = stmt.executeQuery(qry);
-			
+
 			while (result.next()) {
-				contrato = (ContratoVO) criarResultSet(result);
+				contrato = criarResultSet(result);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: consultarPorID()");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closePreparedStatement(stmt);
@@ -140,13 +134,13 @@ public class ContratoDAO implements BaseDAO<Object>{
 	}
 
 	@Override
-	public Object cadastrar(Object object) {
+	public ContratoVO cadastrar(ContratoVO ContratoVO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean alterar(Object obj) {
+	public boolean alterar(ContratoVO obj) {
 		// TODO Auto-generated method stub
 		return false;
 	}

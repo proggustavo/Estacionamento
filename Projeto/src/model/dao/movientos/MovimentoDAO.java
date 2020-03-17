@@ -14,53 +14,47 @@ import model.vo.movimentos.MovimentoVO;
 import model.vo.movimentos.PlanoVO;
 import model.vo.movimentos.TicketVO;
 
-public class MovimentoDAO implements BaseDAO<Object>{
+public class MovimentoDAO implements BaseDAO<MovimentoVO>{
 
 	@Override
-	public Object criarResultSet(ResultSet result) {
+	public MovimentoVO criarResultSet(ResultSet result) {
 		MovimentoVO movimento = new MovimentoVO();
 
 		try {
 
 			movimento.setId(result.getInt("idmovimento"));
 			
-			int idC = result.getInt("idcliente");
+			int idT = result.getInt("idticket");
 			TicketDAO ticketDAO = new TicketDAO();
-			TicketVO ticketVO = (TicketVO) ticketDAO.consultarPorId(idC);
+			TicketVO ticketVO = (TicketVO) ticketDAO.consultarPorId(idT);
 			movimento.setTicket(ticketVO);
 			
 			int idP = result.getInt("idplano");
 			PlanoDAO planoDAO = new PlanoDAO();
-			PlanoVO planoVO = (PlanoVO) planoDAO.consultarPorId(idP);
+			PlanoVO planoVO = planoDAO.consultarPorId(idP);
 			movimento.setPlano(planoVO);
-			
-//			Date dt_entrada = result.getDate("dt_entrada");
-//			Date dt_saida = result.getDate("dt_saida");
-//			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//			LocalDateTime local_dt_entrada = LocalDateTime.parse((CharSequence) dt_entrada, dtf);
-//			LocalDateTime local_dt_saida = LocalDateTime.parse((CharSequence) dt_saida, dtf);
 			
 			movimento.setHr_entrada(result.getTimestamp("hr_entrada").toLocalDateTime());
 			movimento.setHr_saida(result.getTimestamp("hr_saida").toLocalDateTime());
 			
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: criarResultSet()");
-			System.out.println();
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		}
 
 		return movimento;
 	}
 
 	@Override
-	public ArrayList<?> consultarTodos() {
-		Connection conn = Banco.getConnection();
+	public ArrayList<MovimentoVO> consultarTodos() {
+ 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet result = null;
 
@@ -70,19 +64,20 @@ public class MovimentoDAO implements BaseDAO<Object>{
 		try {
 			result = stmt.executeQuery(qry);
 			while (result.next()) {
-				MovimentoVO vo = (MovimentoVO) criarResultSet(result);
+				MovimentoVO vo = criarResultSet(result);
 				lista.add(vo);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
-			System.out.println(this.getClass().getSimpleName());
+			System.out.println("Class:" + this.getClass().getSimpleName());
 			System.out.println("Method: consultarTodos()");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closeStatement(stmt);
@@ -92,14 +87,14 @@ public class MovimentoDAO implements BaseDAO<Object>{
 	}
 
 	@Override
-	public ArrayList<?> consultar(Seletor seletor) {
+	public ArrayList<MovimentoVO> consultar(Seletor seletor) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object consultarPorId(int id) {
-		String qry = " SELECT * FROM MOVIMENTO WHERE ID=? ";
+	public MovimentoVO consultarPorId(int id) {
+		String qry = " SELECT * FROM MOVIMENTO WHERE IDMOVIMENTO = ? ";
 		MovimentoVO movimento = null;
 		
 		Connection conn = Banco.getConnection();
@@ -112,18 +107,19 @@ public class MovimentoDAO implements BaseDAO<Object>{
 			result = stmt.executeQuery(qry);
 			
 			while (result.next()) {
-				movimento = (MovimentoVO) criarResultSet(result);
+				movimento = criarResultSet(result);
 			}
 		} catch (SQLException e) {
+			System.out.println();
 			System.out.println("/****************************************************************/");
 			System.out.println(this.getClass().getSimpleName());
 			System.out.println("Method: consultarPorID()");
 			System.out.println(qry);
-			e.printStackTrace();
-			System.out.println(e.getMessage());
-			System.out.println(e.getCause());
-			System.out.println(e.getSQLState());
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());;
 			System.out.println("/****************************************************************/");
+			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);
 			Banco.closePreparedStatement(stmt);
@@ -134,13 +130,13 @@ public class MovimentoDAO implements BaseDAO<Object>{
 	}
 
 	@Override
-	public Object cadastrar(Object object) {
+	public MovimentoVO cadastrar(MovimentoVO MovimentoVO) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean alterar(Object object) {
+	public boolean alterar(MovimentoVO MovimentoVO) {
 		// TODO Auto-generated method stub
 		return false;
 	}
