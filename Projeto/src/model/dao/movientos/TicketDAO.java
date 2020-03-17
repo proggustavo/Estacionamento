@@ -89,7 +89,7 @@ public class TicketDAO implements BaseDAO<TicketVO>{
 
 	@Override
 	public TicketVO consultarPorId(int id) {
-		String qry = " SELECT * FROM TICKET WHERE IDTICKET = " + id;
+		String qry = " SELECT * FROM TICKET WHERE IDTICKET = ? ";
 		TicketVO ticket = null;
 		
 		Connection conn = Banco.getConnection();
@@ -98,7 +98,7 @@ public class TicketDAO implements BaseDAO<TicketVO>{
 		
 		try {
 			
-//			stmt.setInt(1, id);
+			stmt.setInt(1, id);
 			result = stmt.executeQuery(qry);
 			
 			while (result.next()) {
