@@ -30,4 +30,9 @@ public class MarcaVO {
 	public void setMarca(String marca) {
 		this.marca = marca;
 	}
+
+	@Override
+	public String toString() {
+		return "Marca: " + this.marca;
+	}
 }

@@ -4,7 +4,6 @@ public class ModeloVO {
 	
 	private int id;
 	private String descricao;
-//	Objects
 	private MarcaVO marca;
 
 	public ModeloVO(int id, String descricao, MarcaVO marca) {
@@ -41,4 +40,10 @@ public class ModeloVO {
 	public void setMarca(MarcaVO marca) {
 		this.marca = marca;
 	}
+
+	@Override
+	public String toString() {
+		return "Modelo: " + this.descricao;
+	}
+	
 }

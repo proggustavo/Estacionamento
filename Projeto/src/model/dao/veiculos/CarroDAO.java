@@ -13,29 +13,28 @@ import model.seletor.Seletor;
 import model.vo.veiculo.CarroVO;
 import model.vo.veiculo.ModeloVO;
 
-public class CarroDAO implements BaseDAO<CarroVO>{
+public class CarroDAO implements BaseDAO<CarroVO> {
 
-	@Override
 	public CarroVO criarResultSet(ResultSet result) {
 		CarroVO carro = null;
 
 		try {
-			
+
 			carro = new CarroVO();
 			carro.setId(result.getInt("idcarro"));
 
 			int idModelo = result.getInt("idmodelo");
 			ModeloDAO modeloDAO = new ModeloDAO();
 			ModeloVO modelo = (ModeloVO) modeloDAO.consultarPorId(idModelo);
-			
+
 //			int idCliente = result.getInt("idcliente");
 //			ClienteDAO clienteDAO = new ClienteDAO();
 //			ClienteVO clienteVO = (ClienteVO) clienteDAO.consultarPorId(idCliente);
-			
+
 			carro.setModelo(modelo);
 			carro.setPlaca(result.getString("placa"));
 			carro.setCor(result.getString("cor"));
-			
+
 		} catch (SQLException e) {
 			System.out.println();
 			System.out.println("/****************************************************************/");
@@ -53,7 +52,7 @@ public class CarroDAO implements BaseDAO<CarroVO>{
 	}
 
 	@Override
-	public ArrayList<?> consultarTodos() {
+	public ArrayList<CarroVO> consultarTodos() {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet result = null;
@@ -88,18 +87,18 @@ public class CarroDAO implements BaseDAO<CarroVO>{
 
 	@Override
 	public ArrayList<?> consultar(Seletor seletor) {
-		
+
 		String qry = " SELECT * FROM CARRO ";
 		ArrayList<CarroVO> lista = new ArrayList<CarroVO>();
-		
+
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, qry);
 		ResultSet result = null;
-		
+
 		if (seletor.temFiltro()) {
 			qry = seletor.criarFiltroCliente(qry);
 		}
-		
+
 		try {
 			result = stmt.executeQuery(qry);
 			while (result.next()) {
@@ -127,18 +126,19 @@ public class CarroDAO implements BaseDAO<CarroVO>{
 
 	@Override
 	public CarroVO consultarPorId(int id) {
-		String qry = " SELECT * FROM CARRO WHERE IDCARRO = ? ";
+//		String qry = " SELECT * FROM CARRO WHERE IDCARRO = ? ";
+		String qry = " SELECT * FROM CARRO WHERE IDCARRO = " + id;
 		CarroVO carro = null;
-		
+
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, qry);
 		ResultSet result = null;
-		
+
 		try {
-			
-			stmt.setInt(1, id);
+
+//			stmt.setInt(1, id);
 			result = stmt.executeQuery(qry);
-			
+
 			while (result.next()) {
 				carro = criarResultSet(result);
 			}
@@ -175,9 +175,9 @@ public class CarroDAO implements BaseDAO<CarroVO>{
 	}
 
 	@Override
-	public boolean excluir(int id) {
+	public boolean excluir(int[] id) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 }

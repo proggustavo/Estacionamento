@@ -154,7 +154,7 @@ public class ClienteView extends JPanel {
 		
 		DefaultTableModel model = new DefaultTableModel(data, colunmName);
 		table = new JTable(model);
-		modificacao.tabelaConfig(table);
+		modificacao.tableLookAndFiel(table);
 		scrollPane.setViewportView(table);
 	
 	}

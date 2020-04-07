@@ -66,5 +66,11 @@ public class TicketVO {
 		this.dataValidacao = dataValidacao;
 	}
 	
-
+	@Override
+	public String toString() {
+		return "Número: " + this.numero +
+				" -  valor: " + this.valor +
+				" -  dataValidacao: " + this.dataValidacao +
+				" -  cliente: " + this.cliente;
+	}
 }

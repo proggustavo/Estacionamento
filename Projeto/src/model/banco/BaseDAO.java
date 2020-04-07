@@ -1,18 +1,10 @@
 package model.banco;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import model.seletor.Seletor;
 
 public interface BaseDAO<T> {
-
-	/**
-	 * Método que cria um ResultSet;
-	 * @param result
-	 * @return vo
-	 */
-	public abstract T criarResultSet(ResultSet result);
 	
 	/**
 	 * Método para consultar tudo o que há no db;
@@ -53,6 +45,6 @@ public interface BaseDAO<T> {
 	 * @param id
 	 * @return true/false
 	 */
-	public abstract boolean excluir(int id);
+	public abstract boolean excluir(int[] id);	
 	
 }

@@ -14,24 +14,23 @@ import model.seletor.Seletor;
 import model.vo.cliente.ClienteVO;
 import model.vo.movimentos.TicketVO;
 
-public class TicketDAO implements BaseDAO<TicketVO>{
+public class TicketDAO implements BaseDAO<TicketVO> {
 
-	@Override
 	public TicketVO criarResultSet(ResultSet result) {
 		TicketVO ticket = new TicketVO();
 
 		try {
 			ticket.setId(result.getInt("idticket"));
-			
+
 			int idCliente = result.getInt("idCliente");
 			ClienteDAO clienteDAO = new ClienteDAO();
 			ClienteVO clienteVO = clienteDAO.consultarPorId(idCliente);
 			ticket.setCliente(clienteVO);
-			
+
 			ticket.setNumero(result.getLong("n_ticket"));
 			ticket.setValor(result.getDouble("valor"));
 			ticket.setDataValidacao(result.getTimestamp("hr_validacao").toLocalDateTime());
-		
+
 		} catch (SQLException e) {
 			System.out.println();
 			System.out.println("/****************************************************************/");
@@ -48,7 +47,7 @@ public class TicketDAO implements BaseDAO<TicketVO>{
 	}
 
 	@Override
-	public ArrayList<?> consultarTodos() {
+	public ArrayList<TicketVO> consultarTodos() {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet result = null;
@@ -89,18 +88,19 @@ public class TicketDAO implements BaseDAO<TicketVO>{
 
 	@Override
 	public TicketVO consultarPorId(int id) {
-		String qry = " SELECT * FROM TICKET WHERE IDTICKET = ? ";
+//		String qry = " SELECT * FROM TICKET WHERE IDTICKET = ? ";
+		String qry = " SELECT * FROM TICKET WHERE IDTICKET = " + id;
 		TicketVO ticket = null;
-		
+
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, qry);
 		ResultSet result = null;
-		
+
 		try {
-			
-			stmt.setInt(1, id);
+
+//			stmt.setInt(1, id);
 			result = stmt.executeQuery(qry);
-			
+
 			while (result.next()) {
 				ticket = criarResultSet(result);
 			}
@@ -137,7 +137,7 @@ public class TicketDAO implements BaseDAO<TicketVO>{
 	}
 
 	@Override
-	public boolean excluir(int id) {
+	public boolean excluir(int[] id) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -17,7 +17,6 @@ import model.vo.movimentos.PlanoVO;
 
 public class ContratoDAO implements BaseDAO<ContratoVO> {
 
-	@Override
 	public ContratoVO criarResultSet(ResultSet result) {
 		ContratoVO contrato = new ContratoVO();
 
@@ -59,7 +58,7 @@ public class ContratoDAO implements BaseDAO<ContratoVO> {
 	}
 
 	@Override
-	public ArrayList<?> consultarTodos() {
+	public ArrayList<ContratoVO> consultarTodos() {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet result = null;
@@ -98,7 +97,8 @@ public class ContratoDAO implements BaseDAO<ContratoVO> {
 
 	@Override
 	public ContratoVO consultarPorId(int id) {
-		String qry = " SELECT * FROM CONTRATO WHERE IDCONTRATO = ? ";
+//		String qry = " SELECT * FROM CONTRATO WHERE IDCONTRATO = ? ";
+		String qry = " SELECT * FROM CONTRATO WHERE IDCONTRATO = " + id;
 		ContratoVO contrato = null;
 
 		Connection conn = Banco.getConnection();
@@ -107,7 +107,7 @@ public class ContratoDAO implements BaseDAO<ContratoVO> {
 
 		try {
 
-			stmt.setInt(1, id);
+//			stmt.setInt(1, id);
 			result = stmt.executeQuery(qry);
 
 			while (result.next()) {
@@ -146,7 +146,7 @@ public class ContratoDAO implements BaseDAO<ContratoVO> {
 	}
 
 	@Override
-	public boolean excluir(int id) {
+	public boolean excluir(int[] id) {
 		// TODO Auto-generated method stub
 		return false;
 	}

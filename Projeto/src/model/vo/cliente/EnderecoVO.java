@@ -58,7 +58,15 @@ public class EnderecoVO {
 	}
 
 	public void setCidade(String cidade) {
-		cidade = cidade;
+		this.cidade = cidade;
+	}
+
+	@Override
+	public String toString() {
+		return "Número: " + this.numero + 
+				" - Rua: " + this.rua + 
+				" - Bairro: " + this.bairro +
+				" - Cidade: " + this.cidade;
 	}
 	
 	

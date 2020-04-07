@@ -14,7 +14,6 @@ import model.vo.veiculo.MarcaVO;
 
 public class MarcaDAO implements BaseDAO<MarcaVO> {
 
-	@Override
 	public MarcaVO criarResultSet(ResultSet result) {
 		MarcaVO vo = null;
 
@@ -73,21 +72,21 @@ public class MarcaDAO implements BaseDAO<MarcaVO> {
 
 		return lista;
 	}
-	
+
 	@Override
 	public ArrayList<MarcaVO> consultar(Seletor seletor) {
-		
+
 		String qry = " SELECT * FROM MARCA WHERE NOME=? ";
 		ArrayList<MarcaVO> lista = new ArrayList<MarcaVO>();
-		
+
 		Connection conexao = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, qry);
 		ResultSet result = null;
-		
+
 		if (seletor.temFiltro()) {
 			qry = seletor.criarFiltroCliente(qry);
 		}
-		
+
 		try {
 			result = stmt.executeQuery(qry);
 			while (result.next()) {
@@ -110,25 +109,25 @@ public class MarcaDAO implements BaseDAO<MarcaVO> {
 			Banco.closePreparedStatement(stmt);
 			Banco.closeConnection(conexao);
 		}
-		
+
 		return lista;
 	}
 
 	@Override
 	public MarcaVO consultarPorId(int id) {
-
-		String qry = " SELECT * FROM MARCA WHERE IDMARCA = ? ";
+//		String qry = " SELECT * FROM MARCA WHERE IDMARCA = ? ";
+		String qry = " SELECT * FROM MARCA WHERE IDMARCA = " + id;
 		MarcaVO marca = null;
 
 		Connection conexao = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, qry);
 		ResultSet result = null;
-		
+
 		try {
-			
-			stmt.setInt(1, id);
+
+//			stmt.setInt(1, id);
 			result = stmt.executeQuery(qry);
-			
+
 			while (result.next()) {
 				marca = criarResultSet(result);
 			}
@@ -165,9 +164,9 @@ public class MarcaDAO implements BaseDAO<MarcaVO> {
 	}
 
 	@Override
-	public boolean excluir(int id) {
+	public boolean excluir(int[] id) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 }

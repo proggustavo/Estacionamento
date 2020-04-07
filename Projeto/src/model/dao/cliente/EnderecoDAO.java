@@ -13,20 +13,19 @@ import model.vo.cliente.EnderecoVO;
 
 public class EnderecoDAO implements BaseDAO<EnderecoVO> {
 
-	@Override
 	public EnderecoVO criarResultSet(ResultSet result) {
-		
+
 		EnderecoVO endereco = null;
-		
+
 		try {
 			endereco = new EnderecoVO();
-			
+
 			endereco.setId(result.getInt("idendereco"));
 			endereco.setNumero(result.getInt("numero"));
 			endereco.setRua(result.getString("rua"));
 			endereco.setBairro(result.getString("bairro"));
 			endereco.setCidade(result.getString("cidade"));
-			
+
 		} catch (SQLException e) {
 			System.out.println();
 			System.out.println("/****************************************************************/");
@@ -43,14 +42,14 @@ public class EnderecoDAO implements BaseDAO<EnderecoVO> {
 
 	@Override
 	public ArrayList<EnderecoVO> consultarTodos() {
-		
+
 		String qry = " SELECT * FROM ENDERECO ";
 		ArrayList<EnderecoVO> lista = new ArrayList<EnderecoVO>();
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, qry);
 		ResultSet result = null;
-		
+
 		try {
 			result = stmt.executeQuery(qry);
 			while (result.next()) {
@@ -73,7 +72,7 @@ public class EnderecoDAO implements BaseDAO<EnderecoVO> {
 			Banco.closePreparedStatement(stmt);
 			Banco.closeConnection(conn);
 		}
-		
+
 		return lista;
 	}
 
@@ -86,23 +85,23 @@ public class EnderecoDAO implements BaseDAO<EnderecoVO> {
 
 	@Override
 	public EnderecoVO consultarPorId(int id) {
-		
-		String qry = " SELECT * FROM ENDERECO WHERE IDENDERECO = ? ";
+//		String qry = " SELECT * FROM ENDERECO WHERE IDENDERECO = ? ";
+		String qry = " SELECT * FROM ENDERECO WHERE IDENDERECO = " + id;
 		EnderecoVO endereco = null;
-		
+
 		Connection conexao = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, qry);
 		ResultSet result = null;
-		
+
 		try {
-			
-			stmt.setInt(1, id);
+
+//			stmt.setInt(1, id);
 			result = stmt.executeQuery(qry);
-			
+
 			while (result.next()) {
 				endereco = criarResultSet(result);
 			}
-			
+
 		} catch (SQLException e) {
 			System.out.println();
 			System.out.println("/****************************************************************/");
@@ -119,7 +118,7 @@ public class EnderecoDAO implements BaseDAO<EnderecoVO> {
 			Banco.closePreparedStatement(stmt);
 			Banco.closeConnection(conexao);
 		}
-		
+
 		return endereco;
 	}
 
@@ -136,7 +135,7 @@ public class EnderecoDAO implements BaseDAO<EnderecoVO> {
 	}
 
 	@Override
-	public boolean excluir(int id) {
+	public boolean excluir(int[] id) {
 		// TODO Auto-generated method stub
 		return false;
 	}

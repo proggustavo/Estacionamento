@@ -51,5 +51,11 @@ public class CarroVO {
 	public void setModelo(ModeloVO modelo) {
 		this.modelo = modelo;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Placa: " + this.placa + 
+				" -  Cor: " + this.cor + 
+				" -  Modelo: " + this.modelo.toString();
+	}
 }

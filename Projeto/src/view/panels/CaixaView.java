@@ -118,7 +118,7 @@ public class CaixaView extends JPanel {
 		
 		DefaultTableModel model = new DefaultTableModel(data, colunmName);
 		table = new JTable(model);
-		modificacao.tabelaConfig(table);
+		modificacao.tableLookAndFiel(table);
 		scrollPane.setViewportView(table);
 		
 		String text = "<html><body align=Center>Imprimir Comprovante<br>(Linha Selecionada)</body></html>";

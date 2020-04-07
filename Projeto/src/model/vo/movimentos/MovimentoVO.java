@@ -7,8 +7,6 @@ public class MovimentoVO {
 	private int id;
 	private LocalDateTime hr_entrada;
 	private LocalDateTime hr_saida;
-//	Objects
-//	private MoveVO moveVO;
 	private PlanoVO plano;
 	private TicketVO ticket;
 	
@@ -63,6 +61,15 @@ public class MovimentoVO {
 
 	public void setTicket(TicketVO ticket) {
 		this.ticket = ticket;
+	}
+
+	@Override
+	public String toString() {
+		return "ID: " + this.id + 
+				" -  hr_entrada: " + this.hr_entrada + 
+				" -  hr_saida: " + this.hr_saida + 
+				" -  plano: " + this.plano +
+				" -  ticket: " + this.ticket;
 	}
 
 }

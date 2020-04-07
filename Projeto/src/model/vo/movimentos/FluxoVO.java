@@ -31,5 +31,11 @@ public class FluxoVO {
 	public void setMovimento(MovimentoVO movimento) {
 		this.movimento = movimento;
 	}
+
+	@Override
+	public String toString() {
+		return "ID: " + id + 
+				" - Movimento: " + this.movimento.toString();
+	}
 	
 }

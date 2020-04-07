@@ -21,8 +21,16 @@ public class TicketPerdidoView extends JPanel {
 	private static final String SELECIONE = "~ SELECIONE ~";
 	private static final String DINHEIRO = "1 - DINHEIRO";
 	private static final String CARTAO = "2 - CARTÃO";
+	
 	private ArrayList<String> tiposPagamento;
+	private JTextField txtNome;
+	private JTextField txtCPF;
+	private JTextField txtPlaca;
+	private JTextField txtRenavam;
 
+	/**
+	 * Inicia a Tela
+	 */
 	public TicketPerdidoView() {
 		
 		this.setBounds(100, 100, 902, 704);
@@ -32,8 +40,23 @@ public class TicketPerdidoView extends JPanel {
 		this.initialize();
 	}
 
+	/**
+	 * Adiciona Todos os Componentes para a Tela
+	 */
 	private void initialize() {
 		
+		setJLabels_JSeparetors();
+		
+		setInputFields();
+		
+		setValidationButtons();
+		
+	}
+
+	/**
+	 * Adiciona os JLabels a tela & JSeparators
+	 */
+	private void setJLabels_JSeparetors() {
 		JLabel lblRegistroDeTicket = new JLabel("Registro de Ticket Perdido");
 		lblRegistroDeTicket.setHorizontalAlignment(SwingConstants.CENTER);
 		lblRegistroDeTicket.setFont(new Font("Arial", Font.BOLD, 30));
@@ -75,31 +98,41 @@ public class TicketPerdidoView extends JPanel {
 		lblformaDepagamento.setFont(new Font("Arial", Font.BOLD, 14));
 		lblformaDepagamento.setBackground(Color.WHITE);
 		add(lblformaDepagamento, "cell 2 9 2 1,alignx left,growy");
-		
-		JTextField txtNome = new JTextField();
+	}
+	
+	/**
+	 * Adiciona os campos de validação na tela;
+	 */
+	private void setInputFields() {
+		txtNome = new JTextField();
 		txtNome.setFont(new Font("Arial", Font.BOLD, 14));
 		txtNome.setBorder(new LineBorder(Color.BLACK, 1, true));
 		add(txtNome, "cell 4 4 5 1,grow");
 		txtNome.setColumns(10);
 		
-		JTextField txtCPF = new JTextField();
+		txtCPF = new JTextField();
 		txtCPF.setFont(new Font("Arial", Font.BOLD, 14));
 		txtCPF.setBorder(new LineBorder(Color.BLACK, 1, true));
 		txtCPF.setColumns(10);
 		add(txtCPF, "cell 4 5 5 1,grow");
 		
-		JTextField txtPlaca = new JTextField();
+		txtPlaca = new JTextField();
 		txtPlaca.setFont(new Font("Arial", Font.BOLD, 14));
 		txtPlaca.setBorder(new LineBorder(Color.BLACK, 1, true));
 		txtPlaca.setColumns(10);
 		add(txtPlaca, "cell 4 6 5 1,grow");
 		
-		JTextField txtRenavam = new JTextField();
+		txtRenavam = new JTextField();
 		txtRenavam.setFont(new Font("Arial", Font.BOLD, 14));
 		txtRenavam.setBorder(new LineBorder(Color.BLACK, 1, true));
 		txtRenavam.setColumns(10);
 		add(txtRenavam, "cell 4 7 5 1,grow");
-		
+	}
+	
+	/**
+	 * Adiciona os Botões para validação dos campos de entrada
+	 */
+	private void setValidationButtons() {
 		tiposPagamento = new ArrayList<String>();
 		tiposPagamento.add(SELECIONE);
 		tiposPagamento.add(DINHEIRO);
@@ -119,6 +152,5 @@ public class TicketPerdidoView extends JPanel {
 			
 			
 		});
-		
 	}
 }

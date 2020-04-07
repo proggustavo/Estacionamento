@@ -3,6 +3,7 @@ package view.panels;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,6 +17,9 @@ import javax.swing.table.DefaultTableModel;
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 
+import model.dao.movientos.FluxoDAO;
+import model.vo.movimentos.FluxoVO;
+import model.vo.movimentos.MovimentoVO;
 import net.miginfocom.swing.MigLayout;
 import util.modifications.Modificacoes;
 
@@ -28,38 +32,63 @@ public class MovimentoView extends JPanel {
 	private DatePicker dtFinal;
 	private JScrollPane scrollPane;
 	private JTable table;
-	
-	private String[] colunas = {"Número", "Nome", "Plano", "Placa", "Valor", "Entrada", "Saída"};
+
+	private ArrayList<FluxoVO> lista = null;
+	private String[] colunas = { "Número", "Nome", "Plano", "Placa", "Valor", "Entrada", "Saída" };
+	private DefaultTableModel model;
 
 	public MovimentoView() {
-		
+
 		this.setBounds(100, 100, 1065, 812);
 		this.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		this.setLayout(new MigLayout("", "[10px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][10px]", "[10px][grow][20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][10px]"));
-		
+		this.setLayout(new MigLayout("",
+				"[10px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][10px]",
+				"[10px][grow][20px][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][grow][10px]"));
+
 		this.initialize();
 	}
 
 	private void initialize() {
+
+		setJLabels_JSeparator();
+
+		setInputFields();
+
+		setValidationButtons();
+
+		setJTable_And_Componentes();
 		
+		atualizarTabela(lista);
+
+	}
+
+	/**
+	 * Adiciona os JLabels a tela & JSeparators
+	 */
+	private void setJLabels_JSeparator() {
+
 		JLabel lblMovimento = new JLabel("Movimento:");
 		lblMovimento.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMovimento.setFont(new Font("Arial", Font.BOLD, 18));
 		lblMovimento.setBackground(Color.WHITE);
 		this.add(lblMovimento, "cell 1 1 3 1,grow");
-		
-//		BUGANDO....
-//		
+
+	}
+
+	/**
+	 * Adiciona os campos de validação na tela;
+	 */
+	private void setInputFields() {
 		DatePickerSettings dateSettings = new DatePickerSettings();
 		dateSettings.setAllowKeyboardEditing(false);
-		
-		dtInicio = new DatePicker();
-////		TXT
+
+		dtInicio = new DatePicker(dateSettings);
+//		TXT
 		dtInicio.getComponentDateTextField().setBackground(Color.WHITE);
 		dtInicio.getComponentDateTextField().setFont(new Font("Arial", Font.BOLD, 16));
 		dtInicio.getComponentDateTextField().setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		dtInicio.getComponentDateTextField().setHorizontalAlignment(SwingConstants.CENTER);
-////		BOTAO
+//		BOTAO
 		dtInicio.getComponentToggleCalendarButton().setText("Início");
 		dtInicio.getComponentToggleCalendarButton().setPreferredSize(new Dimension(50, 20));
 		dtInicio.getComponentToggleCalendarButton().setFont(new Font("Arial", Font.BOLD, 16));
@@ -78,35 +107,76 @@ public class MovimentoView extends JPanel {
 		dtFinal.getComponentToggleCalendarButton().setFont(new Font("Arial", Font.BOLD, 16));
 		dtFinal.getComponentToggleCalendarButton().setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		this.add(dtFinal, "cell 11 1,grow");
-		
+	}
+
+	/**
+	 * Adiciona os Botões para validação dos campos de entrada
+	 */
+	private void setValidationButtons() {
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.setPreferredSize(new Dimension(80, 25));
 		btnPesquisar.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		btnPesquisar.setFont(new Font("Arial", Font.BOLD, 16));
 		this.add(btnPesquisar, "cell 12 1 2 1,grow");
-		
+	}
+
+	/**
+	 * Adiciona a JTable com ALGUNS campos que intaragem com ela
+	 */
+	private void setJTable_And_Componentes() {
 		scrollPane = new JScrollPane();
 		scrollPane.setBackground(Color.WHITE);
 		scrollPane.getViewport().setBackground(Color.WHITE);
 		this.add(scrollPane, "cell 1 3 13 11,grow");
-		
-//		String[] colunmName = {"Número", "Nome", "Plano", "Placa", "Valor", "Entrada", "Saída"};
-//		Object[][] data = { {"", "", "", "", "", "", ""}, };
-		
-//		DefaultTableModel model = new DefaultTableModel(data, colunmName);
-		table = new JTable();
-		modificacao.tabelaConfig(table);
+
+		table = new JTable(model) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		modificacao.tableLookAndFiel(table);
 		scrollPane.setViewportView(table);
+
+	}
+	
+	private void getAll() {
+		FluxoDAO dao = new FluxoDAO();
+		ArrayList<FluxoVO> vo = dao.consultarTodos();
+		atualizarTabela(vo);
+	}
+
+	private void atualizarTabela(ArrayList<FluxoVO> vo) {
+
+//		 Limpa a tabela
 		limparTabela();
+
+		getAll();
 		
+//		 Obtém o model da tabela
+		model = (DefaultTableModel) table.getModel();
+
+//		 Percorre os empregados para adicionar linha a linha na tabela (JTable)
+		Object[] novaLinha = new Object[5];
+		
+//		"Número", "Nome", "Plano", "Placa", "Valor", "Entrada", "Saída"
+		for (FluxoVO fluxo : vo) {
+			novaLinha[0] = fluxo.getMovimento().getTicket();
+			novaLinha[1] = fluxo.getMovimento().getTicket().getCliente().getNome();
+			novaLinha[2] = fluxo.getMovimento().getTicket().getPlano().getDescircao();
+			novaLinha[3] = fluxo.getMovimento().getTicket().getCliente().getCarro().getPlaca();
+			novaLinha[4] = fluxo.getMovimento().getTicket().getValor();
+			novaLinha[5] = fluxo.getMovimento().getHr_entrada();
+			novaLinha[6] = fluxo.getMovimento().getHr_saida();
+
+//			 Adiciona a nova linha na tabela
+			model.addRow(novaLinha);
+
+		}
 	}
-	
+
 	private void limparTabela() {
-		table.setModel(new DefaultTableModel(new Object[][] { colunas, }, colunas));
-	}
-	
-	private void preencherDados() {
-		
+		table.setModel(new DefaultTableModel(new Object[][] {}, colunas));
 	}
 
 }

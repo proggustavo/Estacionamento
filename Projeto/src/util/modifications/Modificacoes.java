@@ -2,34 +2,42 @@ package util.modifications;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.InputMethodEvent;
+import java.awt.event.InputMethodListener;
 import java.text.ParseException;
+import java.util.ArrayList;
 
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.text.MaskFormatter;
 
+import model.dao.veiculos.MarcaDAO;
+import model.dao.veiculos.ModeloDAO;
+import model.vo.veiculo.MarcaVO;
+import model.vo.veiculo.ModeloVO;
+
 public class Modificacoes {
-	
-	public static final int JOPTION_ATENCAO = JOptionPane.WARNING_MESSAGE;
-	public static final int JOPTION_INFORMACAO = JOptionPane.INFORMATION_MESSAGE;
-	public static final int JOPTION_ERRO = JOptionPane.ERROR_MESSAGE;
-	public static final int JOPTION_PERGUNTA = JOptionPane.QUESTION_MESSAGE;
-	public static final int JOPTION_NO_ICON = JOptionPane.PLAIN_MESSAGE;
-	public static final int JOPTION_Y_N_C = JOptionPane.YES_NO_CANCEL_OPTION;
-	public static final int JOPTION_Y_N = JOptionPane.YES_NO_OPTION;
-	public static final int JOPTION_Y = JOptionPane.YES_OPTION;
-	public static final int JOPTION_K_C = JOptionPane.OK_CANCEL_OPTION;
+
+	public static final int INICIO_VIEW = 1;
+	public static final int CAIXA = 2;
+	public static final int CLIENTE = 3;
+	public static final int CADASTRO = 4;
+	public static final int ATUALIZAR = 5;
+	public static final int FLUXO = 6;
 
 	public static final int TIPO_MENSAGEM = 1;
 	public static final int TIPO_CONFIRMACAO = 2;
@@ -37,7 +45,9 @@ public class Modificacoes {
 	public static final int TIPO_INTERNO = 4;
 
 	/**
-	 * Modifica e retorna Label contendo uma Mensagem, com fonte, cor e tamanhos padronizados.
+	 * Modifica e retorna Label contendo uma Mensagem, com fonte, cor e tamanhos
+	 * padronizados.
+	 * 
 	 * @param label
 	 * @param text
 	 * @return label+text
@@ -49,115 +59,148 @@ public class Modificacoes {
 		label.setFont(new Font("Arial", Font.BOLD, 20));
 		label.setBackground(Color.WHITE);
 		label.setForeground(Color.BLACK);
-		
+
 		if (text.trim().isEmpty() || text.trim().equals("")) {
-			label.setText("<html><body>Erro: Line 76 >> Modificacoes.class<br>Method: labelConfig.<br>Motivo: Campo Vazio</body></html>");
+			label.setText(
+					"<html><body>Erro: Line 76 >> Modificacoes.class<br>Method: labelConfig.<br>Motivo: Campo Vazio</body></html>");
 			return label;
 		}
 
 		return label;
 	}
 
-//	public void joptionConfig(int tipo, Component parentesco, String txt, String title, int iconeMensagem,
-//			int yes_no_cancel, Object[] valores, Object valorInicial) {
-//
-//		switch (tipo) {
-//		case TIPO_MENSAGEM:
-//			JOptionPane.showMessageDialog(parentesco, txt, title, iconeMensagem, null);
-//
-//		case TIPO_CONFIRMACAO:
-//			JOptionPane.showConfirmDialog(parentesco, txt, title, iconeMensagem, yes_no_cancel, null);
-//
-//		case TIPO_DIALOGO:
-//			JOptionPane.showInputDialog(parentesco, txt, title, yes_no_cancel, null, valores, valorInicial);
-//
-//		case TIPO_INTERNO:
-//			JOptionPane.showInternalConfirmDialog(parentesco, txt, title, iconeMensagem, yes_no_cancel, null);
-//		}
-//	}
-
 	/**
 	 * Modifica e retorna fonte, cor, e tamanho, padronizados.
+	 * 
 	 * @param table
-	 * @return table(Style of Table)
+	 * @return table(Style da Table)
 	 */
-	public JTable tabelaConfig(JTable table) {
-		
-		DefaultTableCellRenderer centerRendererLeft = new DefaultTableCellRenderer();
-		DefaultTableCellRenderer centerRendererCenter = new DefaultTableCellRenderer();
-		DefaultTableCellRenderer centerRendererRight = new DefaultTableCellRenderer();
-		
-		// Tentativa para mudar o cellRender dependendo da view
-//		MainView view = new MainView();
-//		InicioView inicioView = new InicioView();
-//		CaixaView caixaView = new CaixaView();
-//		MovimentoView movimentoView = new MovimentoView();
-		
-//		if (inicioView instanceof InicioView) {
-//			if (inicioView.contains(table)) {
-//				
-//			}
-//		}
-		
-//		Renderizar os valores dentro da celular
-		for (int i = 0; i < table.getModel().getColumnCount(); i++) {
-			table.getColumnModel().getColumn(i).setCellRenderer( centerRendererCenter );
-			if (i == 2) {
-				table.getColumnModel().getColumn(1).setCellRenderer( centerRendererLeft );
-			}
-		}
-
+	public JTable tableLookAndFiel(JTable table) {
 		table.setBackground(Color.WHITE);
 		table.setForeground(Color.BLACK);
 		table.setFont(new Font("Arial", Font.BOLD, 16));
 		table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
 		table.getTableHeader().setBackground(Color.WHITE);
 		table.setColumnSelectionAllowed(true);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setCellSelectionEnabled(false);
+		table.setRowSelectionAllowed(true);
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		table.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		
+
 		table.setRowHeight(35);
 		table.setShowGrid(true);
 		table.setGridColor(Color.BLACK);
 		table.setShowHorizontalLines(true);
 		table.setShowVerticalLines(false);
-		
 
 		return table;
 	}
-	
+
+	/**
+	 * Configura a Tabela para editar os campos de acordo com sua instancia
+	 * 
+	 * @param table
+	 * @return table
+	 */
+	public JTable tableConfigurations_(JTable table, int hashCode) {
+		DefaultTableCellRenderer centerRendererLeft = new DefaultTableCellRenderer();
+		DefaultTableCellRenderer centerRendererCenter = new DefaultTableCellRenderer();
+		@SuppressWarnings("unused")
+		DefaultTableCellRenderer centerRendererRight = new DefaultTableCellRenderer();
+		
+		DefaultTableModel model = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				boolean a = false;
+				if (hashCode == INICIO_VIEW) {
+					a = false;
+				}
+				if (hashCode == CAIXA) {
+					a = false;
+				}
+				if (hashCode == CLIENTE) {
+					a = false;
+				}
+				if (hashCode == CADASTRO) {
+					a = true;
+				}
+				if (hashCode == ATUALIZAR) {
+					a = true;
+				}
+				if (hashCode == FLUXO) {
+					a = false;
+				}
+				return a;
+			}
+		};
+		table.setModel(model);
+		table.getColumnModel().getColumn(0).setCellRenderer(centerRendererCenter);
+		
+//		Renderizar os valores dentro da celular
+		for (int i = 0; i < table.getModel().getColumnCount(); i++) {
+			table.getColumnModel().getColumn(i).setCellRenderer(centerRendererCenter);
+			if (i == 3) {
+				table.getColumnModel().getColumn(1).setCellRenderer(centerRendererLeft);
+			}
+		}
+		
+		
+		return table;
+	}
+
 	/**
 	 * Método para criar um ComboBox dentro da JTable
-	 * @param table tabela
+	 * 
+	 * @param table       tabela
 	 * @param sportColumn escolher a coluna
 	 */
 //	 Fiddle with the Sport column's cell editors/renderers.
-	public void mostrarComboBoxJTable(JTable table, TableColumn sportColumn) {
-		// Set up the editor for the sport cells.
-		JComboBox comboBox = new JComboBox();
-		comboBox.addItem("TESTE 1");
-		comboBox.addItem("TESTE 2");
-		comboBox.addItem("TESTE 3");
-		comboBox.addItem("TESTE 4");
-		comboBox.addItem("TESTE 5");
-		comboBox.addItem("TESTE 6");
-		sportColumn.setCellEditor(new DefaultCellEditor(comboBox));
+	public void mostrarComboBoxJTable_Modelo(JTable table, TableColumn sportColumn) {
+//		 Set up the editor for the sport cells.
+		ModeloDAO dao = new ModeloDAO();
+		ArrayList<ModeloVO> vo = dao.consultarTodos();
+		JComboBox<ModeloVO> cbModelo = new JComboBox<ModeloVO>();
+		cbModelo.setModel(new DefaultComboBoxModel(vo.toArray()));
+
+		sportColumn.setCellEditor(new DefaultCellEditor(cbModelo));
 
 //		 Set up tool tips for the sport cells.
 		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 		renderer.setToolTipText("CLIQUE PARA O COMBO BOX APARECER");
 		sportColumn.setCellRenderer(renderer);
 	}
-	
+
 	/**
-	 * Método para reenderizar a JTable e criar uma mascara
-	 * com campo formatado em uma coluna especifica
+	 * Método para criar um ComboBox dentro da JTable
+	 * 
+	 * @param table       tabela
+	 * @param sportColumn escolher a coluna
+	 */
+//	 Fiddle with the Sport column's cell editors/renderers.
+	public void mostrarComboBoxJTabel_Marca(JTable table, TableColumn sportColumn) {
+//		 Set up the editor for the sport cells.
+		MarcaDAO dao = new MarcaDAO();
+		ArrayList<MarcaVO> vo = dao.consultarTodos();
+		JComboBox<MarcaVO> cbMarca = new JComboBox<MarcaVO>();
+		cbMarca.setModel(new DefaultComboBoxModel(vo.toArray()));
+
+		sportColumn.setCellEditor(new DefaultCellEditor(cbMarca));
+
+//		 Set up tool tips for the sport cells.
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		renderer.setToolTipText("CLIQUE PARA O COMBO BOX APARECER");
+		sportColumn.setCellRenderer(renderer);
+	}
+
+	/**
+	 * Método para reenderizar a JTable e criar uma mascara com campo formatado em
+	 * uma coluna especifica
 	 * 
 	 * @param table
 	 * @param TableColumn escolher a coluna
 	 */
 	public void maskFormJTable(JTable table, TableColumn sportColumn) {
-		
+
 		JFormattedTextField placa = new JFormattedTextField();
 		MaskFormatter mascara;
 		try {
@@ -170,14 +213,15 @@ public class Modificacoes {
 		sportColumn.setCellEditor(new DefaultCellEditor(placa));
 
 	}
-	
+
 	/**
 	 * Adicionar e Remover o PlaceHolder
+	 * 
 	 * @param JTextField field
-	 * @param Strign mensagem
+	 * @param Strign     mensagem
 	 */
 	public JFormattedTextField adicionarRemoverFocus(JTextField field, String mensagem) {
-		
+
 		field.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -197,55 +241,59 @@ public class Modificacoes {
 		});
 		return (JFormattedTextField) field;
 	}
-	
+
 	/**
-	 * Criação de uma mascara para o campo, e um place holder(Palavras que somem ao digitar)
+	 * Criação de uma mascara para o campo, e um place holder(Palavras que somem ao
+	 * digitar)
+	 * 
 	 * @param MaskFormatter mask
-	 * @param int tipo
-	 * @param String text
+	 * @param               int tipo
+	 * @param String        text
 	 * 
 	 */
 	public MaskFormatter maskAndPlaceHolder(MaskFormatter mask, int tipo, String text) {
-		
-			try {
-				if (tipo == 1) {
-					mask = new MaskFormatter("###################################");
-				}
-				
-				if (tipo == 2) {
-					mask = new MaskFormatter("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-				}
-				
-				if (tipo == 3) {
-					mask = new MaskFormatter("***********************************");
-				}
-				mask.setPlaceholder(text);
-			} catch (ParseException e) {
-				e.getMessage();
-				e.printStackTrace();
-				e.getStackTrace();
+
+		try {
+			if (tipo == 1) {
+				mask = new MaskFormatter("###################################");
 			}
-			return mask;
+
+			if (tipo == 2) {
+				mask = new MaskFormatter("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
+			}
+
+			if (tipo == 3) {
+				mask = new MaskFormatter("***********************************");
+			}
+			mask.setPlaceholder(text);
+		} catch (ParseException e) {
+			e.getMessage();
+			e.printStackTrace();
+			e.getStackTrace();
+		}
+		return mask;
 	}
-	
+
 	/**
-	 * Remove os espaçoes em branco do campo, iniciando a digitação no começo do campo.
+	 * 
+	 * Remove os espaçoes em branco do campo, iniciando a digitação no começo do
+	 * campo.
+	 * 
 	 * @param JTextField field
 	 * @return cast(JFormatedTextField)
 	 */
-//	public JFormattedTextField caretPosition (JTextField txt) {
-//		txt.addInputMethodListener(new InputMethodListener() {
-//			public void caretPositionChanged(InputMethodEvent event) {
-//
-//				txt = (JFormattedTextField) event.getSource();
-//				int offset = txt.viewToModel((Point) event.getText());
-//				txt.setCaretPosition(offset);
-//			}
-//
-//			public void inputMethodTextChanged(InputMethodEvent event) {
-//
-//			}
-//		});
-//		return (JFormattedTextField) txt;
-//	}
+	public JFormattedTextField caretPosition(JTextField txt) {
+		txt.addInputMethodListener(new InputMethodListener() {
+			public void caretPositionChanged(InputMethodEvent event) {
+				txt.viewToModel((Point) event.getText());
+				int offset = txt.viewToModel((Point) event.getText());
+				txt.setCaretPosition(offset);
+			}
+
+			public void inputMethodTextChanged(InputMethodEvent event) {
+
+			}
+		});
+		return (JFormattedTextField) txt;
+	}
 }

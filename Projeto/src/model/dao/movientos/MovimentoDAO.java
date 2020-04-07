@@ -14,29 +14,28 @@ import model.vo.movimentos.MovimentoVO;
 import model.vo.movimentos.PlanoVO;
 import model.vo.movimentos.TicketVO;
 
-public class MovimentoDAO implements BaseDAO<MovimentoVO>{
+public class MovimentoDAO implements BaseDAO<MovimentoVO> {
 
-	@Override
 	public MovimentoVO criarResultSet(ResultSet result) {
 		MovimentoVO movimento = new MovimentoVO();
 
 		try {
 
 			movimento.setId(result.getInt("idmovimento"));
-			
+
 			int idT = result.getInt("idticket");
 			TicketDAO ticketDAO = new TicketDAO();
-			TicketVO ticketVO = (TicketVO) ticketDAO.consultarPorId(idT);
+			TicketVO ticketVO = ticketDAO.consultarPorId(idT);
 			movimento.setTicket(ticketVO);
-			
+
 			int idP = result.getInt("idplano");
 			PlanoDAO planoDAO = new PlanoDAO();
 			PlanoVO planoVO = planoDAO.consultarPorId(idP);
 			movimento.setPlano(planoVO);
-			
+
 			movimento.setHr_entrada(result.getTimestamp("hr_entrada").toLocalDateTime());
 			movimento.setHr_saida(result.getTimestamp("hr_saida").toLocalDateTime());
-			
+
 		} catch (SQLException e) {
 			System.out.println();
 			System.out.println("/****************************************************************/");
@@ -54,7 +53,7 @@ public class MovimentoDAO implements BaseDAO<MovimentoVO>{
 
 	@Override
 	public ArrayList<MovimentoVO> consultarTodos() {
- 		Connection conn = Banco.getConnection();
+		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet result = null;
 
@@ -94,18 +93,19 @@ public class MovimentoDAO implements BaseDAO<MovimentoVO>{
 
 	@Override
 	public MovimentoVO consultarPorId(int id) {
-		String qry = " SELECT * FROM MOVIMENTO WHERE IDMOVIMENTO = ? ";
+//		String qry = " SELECT * FROM MOVIMENTO WHERE IDMOVIMENTO = ? ";
+		String qry = " SELECT * FROM MOVIMENTO WHERE IDMOVIMENTO = " + id;
 		MovimentoVO movimento = null;
-		
+
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conn, qry);
 		ResultSet result = null;
-		
+
 		try {
-			
-			stmt.setInt(1, id);
+
+//			stmt.setInt(1, id);
 			result = stmt.executeQuery(qry);
-			
+
 			while (result.next()) {
 				movimento = criarResultSet(result);
 			}
@@ -117,7 +117,8 @@ public class MovimentoDAO implements BaseDAO<MovimentoVO>{
 			System.out.println(qry);
 			System.out.println("SQL Message:" + e.getMessage());
 			System.out.println("SQL Cause:" + e.getCause());
-			System.out.println("SQL State:" + e.getSQLState());;
+			System.out.println("SQL State:" + e.getSQLState());
+			;
 			System.out.println("/****************************************************************/");
 			System.out.println();
 		} finally {
@@ -142,11 +143,36 @@ public class MovimentoDAO implements BaseDAO<MovimentoVO>{
 	}
 
 	@Override
-	public boolean excluir(int id) {
-		// TODO Auto-generated method stub
+	public boolean excluir(int[] id) {
+		String qry = "DELETE FROM MOVIMENTO WHERE IDMOVIMENTO IN (?, ?, ?, ?, ?, ?, ?, ?)";
+
+		Connection conn = Banco.getConnection();
+		PreparedStatement prepStmt = Banco.getPreparedStatement(conn, qry);
+
+		try {
+
+			int codigoRetorno = prepStmt.executeUpdate();
+			while (codigoRetorno == 1) {
+				continue;
+			}
+			return true;
+
+		} catch (SQLException e) {
+			System.out.println();
+			System.out.println("/****************************************************************/");
+			System.out.println(this.getClass());
+			System.out.println("Method: method_name");
+			System.out.println(qry);
+			System.out.println("SQL Message:" + e.getMessage());
+			System.out.println("SQL Cause:" + e.getCause());
+			System.out.println("SQL State:" + e.getSQLState());
+			System.out.println("/****************************************************************/");
+			System.out.println();
+		} finally {
+			Banco.closePreparedStatement(prepStmt);
+			Banco.closeConnection(conn);
+		}
 		return false;
 	}
 
-	
-	
 }

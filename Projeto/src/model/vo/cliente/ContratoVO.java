@@ -12,7 +12,6 @@ public class ContratoVO {
 	private LocalDateTime dtSaida;
 	private boolean ativo;
 	private double valor;
-//	Objects
 	private ClienteVO cliente;
 	private PlanoVO plano;
 	
@@ -96,4 +95,16 @@ public class ContratoVO {
 	public void setPlano(PlanoVO plano) {
 		this.plano = plano;
 	}
+
+	@Override
+	public String toString() {
+		return "Nº Cartão: " + this.numeroCartao +
+				" - Hora de Entrada: " + this.dtEntrada +
+				" - Hora de Saída: " + this.dtSaida + 
+				" - Ativo?: " + this.ativo + 
+				" - R$: " + this.valor + 
+				" - Cliente: " + this.cliente.toString() + 
+				" - Plano: " + this.plano.toString();
+	}
+
 }

@@ -14,7 +14,6 @@ import model.vo.movimentos.PlanoVO;
 
 public class PlanoDAO implements BaseDAO<PlanoVO> {
 
-	@Override
 	public PlanoVO criarResultSet(ResultSet result) {
 		PlanoVO plano = new PlanoVO();
 
@@ -41,7 +40,7 @@ public class PlanoDAO implements BaseDAO<PlanoVO> {
 	}
 
 	@Override
-	public ArrayList<?> consultarTodos() {
+	public ArrayList<PlanoVO> consultarTodos() {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet result = null;
@@ -82,18 +81,19 @@ public class PlanoDAO implements BaseDAO<PlanoVO> {
 
 	@Override
 	public PlanoVO consultarPorId(int id) {
-		String qry = " SELECT * FROM PLANO WHERE IDPLANO = ? ";
+//		String qry = " SELECT * FROM PLANO WHERE IDPLANO = ? ";
+		String qry = " SELECT * FROM PLANO WHERE IDPLANO = " + id;
 		PlanoVO plano = null;
 
 		Connection conexao = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, qry);
 		ResultSet result = null;
-		
+
 		try {
-			
-			stmt.setInt(1, id);
+
+//			stmt.setInt(1, id);
 			result = stmt.executeQuery(qry);
-			
+
 			while (result.next()) {
 				plano = criarResultSet(result);
 			}
@@ -130,7 +130,7 @@ public class PlanoDAO implements BaseDAO<PlanoVO> {
 	}
 
 	@Override
-	public boolean excluir(int id) {
+	public boolean excluir(int[] id) {
 		// TODO Auto-generated method stub
 		return false;
 	}

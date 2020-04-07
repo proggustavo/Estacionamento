@@ -15,14 +15,13 @@ import model.vo.movimentos.MovimentoVO;
 
 public class FluxoDAO implements BaseDAO<FluxoVO> {
 
-	@Override
 	public FluxoVO criarResultSet(ResultSet result) {
 		FluxoVO fluxo = new FluxoVO();
 
 		try {
 
 			fluxo.setId(result.getInt("idfluxo"));
-			
+
 			int id = result.getInt("idmovimento");
 			MovimentoDAO movimentoDAO = new MovimentoDAO();
 			MovimentoVO movimentoVO = movimentoDAO.consultarPorId(id);
@@ -44,7 +43,7 @@ public class FluxoDAO implements BaseDAO<FluxoVO> {
 	}
 
 	@Override
-	public ArrayList<?> consultarTodos() {
+	public ArrayList<FluxoVO> consultarTodos() {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet result = null;
@@ -85,18 +84,19 @@ public class FluxoDAO implements BaseDAO<FluxoVO> {
 
 	@Override
 	public FluxoVO consultarPorId(int id) {
-		String qry = " SELECT * FROM FLUXO WHERE IDFLUXO = ? ";
+//		String qry = " SELECT * FROM FLUXO WHERE IDFLUXO = ? ";
+		String qry = " SELECT * FROM FLUXO WHERE IDFLUXO = " + id;
 		FluxoVO fluxo = null;
 
 		Connection conexao = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatement(conexao, qry);
 		ResultSet result = null;
-		
+
 		try {
-			
-			stmt.setInt(1, id);
+
+//			stmt.setInt(1, id);
 			result = stmt.executeQuery(qry);
-			
+
 			while (result.next()) {
 				fluxo = criarResultSet(result);
 			}
@@ -133,7 +133,7 @@ public class FluxoDAO implements BaseDAO<FluxoVO> {
 	}
 
 	@Override
-	public boolean excluir(int id) {
+	public boolean excluir(int[] id) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -94,5 +94,16 @@ public class ClienteVO {
 	public void setCarro(CarroVO carro) {
 		this.carro = carro;
 	}
+
+	@Override
+	public String toString() {
+		return	" - Nome: " + this.nome +
+				" - CPF: " + this.cpf +
+				" - RG: " + this.rg +
+				" - Email: " + this.email +
+				" - Telefone: " + this.telefone +
+				" - Endereco: " + this.endereco.toString() +
+				" -  Carro: " + this.carro.toString();
+	}
 	
 }

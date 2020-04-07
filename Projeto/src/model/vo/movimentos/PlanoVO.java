@@ -40,4 +40,11 @@ public class PlanoVO {
 	public void setDescircao(String descircao) {
 		this.descircao = descircao;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Tipo: " + this.tipo +
+				" - descircao: " + this.descircao;
+	}
 }
