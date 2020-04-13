@@ -347,8 +347,7 @@ public class InicioView extends JPanel {
 
 		btnImprimirComprovante = new JButton("Ultimo Recibo");
 		btnImprimirComprovante.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		btnImprimirComprovante
-				.setIcon(new ImageIcon(InicioView.class.getResource("/img/icons8-enviar-para-a-impressora-50.png")));
+		btnImprimirComprovante.setIcon(new ImageIcon(InicioView.class.getResource("/img/icons8-enviar-para-a-impressora-50.png")));
 		btnImprimirComprovante.setFont(new Font("Arial", Font.BOLD, 16));
 		add(btnImprimirComprovante, "cell 1 11 2 1,grow");
 		btnImprimirComprovante.addActionListener(e -> {
