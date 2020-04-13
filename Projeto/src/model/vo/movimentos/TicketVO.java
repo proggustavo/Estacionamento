@@ -68,7 +68,8 @@ public class TicketVO {
 	
 	@Override
 	public String toString() {
-		return "Número: " + this.numero +
+		return "ID: " + this.id +
+				" Número: " + this.numero +
 				" -  valor: " + this.valor +
 				" -  dataValidacao: " + this.dataValidacao +
 				" -  cliente: " + this.cliente;

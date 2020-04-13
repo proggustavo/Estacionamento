@@ -103,7 +103,8 @@ public class ClienteVO {
 				" - Email: " + this.email +
 				" - Telefone: " + this.telefone +
 				" - Endereco: " + this.endereco.toString() +
-				" -  Carro: " + this.carro.toString();
+				" -  Carro: " + this.carro.toString() +
+				" - ID: " + this.id;
 	}
 	
 }

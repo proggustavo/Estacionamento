@@ -99,7 +99,7 @@ public class ClienteDAO implements BaseDAO<ClienteVO> {
 
 		if (seletor.temFiltro()) {
 			qry = seletor.criarFiltroCliente(qry);
-		}
+}
 
 		try {
 			result = stmt.executeQuery(qry);

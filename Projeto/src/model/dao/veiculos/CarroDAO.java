@@ -19,7 +19,6 @@ public class CarroDAO implements BaseDAO<CarroVO> {
 		CarroVO carro = null;
 
 		try {
-
 			carro = new CarroVO();
 			carro.setId(result.getInt("idcarro"));
 
@@ -47,7 +46,6 @@ public class CarroDAO implements BaseDAO<CarroVO> {
 			System.out.println("/****************************************************************/");
 			System.out.println();
 		}
-
 		return carro;
 	}
 

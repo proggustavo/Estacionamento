@@ -9,9 +9,10 @@ import java.util.ArrayList;
 
 import model.banco.Banco;
 import model.banco.BaseDAO;
+import model.dao.cliente.PlanoDAO;
 import model.seletor.Seletor;
 import model.vo.movimentos.MovimentoVO;
-import model.vo.movimentos.PlanoVO;
+import model.vo.cliente.PlanoVO;
 import model.vo.movimentos.TicketVO;
 
 public class MovimentoDAO implements BaseDAO<MovimentoVO> {

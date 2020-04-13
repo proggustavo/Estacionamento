@@ -113,7 +113,7 @@ public class InicioView extends JPanel {
 //		JButtons - Botões que SIMULAM a Abertura e Fechamento da Cancela
 		setSimulation();
 //		Timer para clicar no botão Procurar e Manter a Tabela Atualizada
-		timerDoClick();
+//		timerDoClick();
 
 	}
 

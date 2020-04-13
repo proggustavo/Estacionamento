@@ -1,5 +1,7 @@
 package model.vo.movimentos;
 
+import model.vo.cliente.PlanoVO;
+
 import java.time.LocalDateTime;
 
 public class MovimentoVO {

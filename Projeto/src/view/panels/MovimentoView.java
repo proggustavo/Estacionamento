@@ -14,12 +14,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.github.lgooddatepicker.components.DatePicker;
-import com.github.lgooddatepicker.components.DatePickerSettings;
-
-import model.dao.movientos.FluxoDAO;
+import javafx.scene.control.DatePicker;
 import model.vo.movimentos.FluxoVO;
-import model.vo.movimentos.MovimentoVO;
 import net.miginfocom.swing.MigLayout;
 import util.modifications.Modificacoes;
 
@@ -57,8 +53,8 @@ public class MovimentoView extends JPanel {
 		setValidationButtons();
 
 		setJTable_And_Componentes();
-		
-		atualizarTabela(lista);
+
+		//atualizarTabela(lista);
 
 	}
 
@@ -79,7 +75,7 @@ public class MovimentoView extends JPanel {
 	 * Adiciona os campos de validação na tela;
 	 */
 	private void setInputFields() {
-		DatePickerSettings dateSettings = new DatePickerSettings();
+/*		DatePickerSettings dateSettings = new DatePickerSettings();
 		dateSettings.setAllowKeyboardEditing(false);
 
 		dtInicio = new DatePicker(dateSettings);
@@ -106,7 +102,7 @@ public class MovimentoView extends JPanel {
 		dtFinal.getComponentToggleCalendarButton().setPreferredSize(new Dimension(50, 20));
 		dtFinal.getComponentToggleCalendarButton().setFont(new Font("Arial", Font.BOLD, 16));
 		dtFinal.getComponentToggleCalendarButton().setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		this.add(dtFinal, "cell 11 1,grow");
+		this.add(dtFinal, "cell 11 1,grow");*/
 	}
 
 	/**
@@ -139,33 +135,25 @@ public class MovimentoView extends JPanel {
 		scrollPane.setViewportView(table);
 
 	}
-	
-	private void getAll() {
-		FluxoDAO dao = new FluxoDAO();
-		ArrayList<FluxoVO> vo = dao.consultarTodos();
-		atualizarTabela(vo);
-	}
 
 	private void atualizarTabela(ArrayList<FluxoVO> vo) {
 
 //		 Limpa a tabela
 		limparTabela();
 
-		getAll();
-		
 //		 Obtém o model da tabela
 		model = (DefaultTableModel) table.getModel();
 
 //		 Percorre os empregados para adicionar linha a linha na tabela (JTable)
 		Object[] novaLinha = new Object[5];
-		
+
 //		"Número", "Nome", "Plano", "Placa", "Valor", "Entrada", "Saída"
 		for (FluxoVO fluxo : vo) {
 			novaLinha[0] = fluxo.getMovimento().getTicket();
-			novaLinha[1] = fluxo.getMovimento().getTicket().getCliente().getNome();
-			novaLinha[2] = fluxo.getMovimento().getTicket().getPlano().getDescircao();
-			novaLinha[3] = fluxo.getMovimento().getTicket().getCliente().getCarro().getPlaca();
-			novaLinha[4] = fluxo.getMovimento().getTicket().getValor();
+			novaLinha[1] = fluxo.getMovimento().getPlano().getDescircao();
+			novaLinha[2] = fluxo.getMovimento().getPlano().getDescircao();
+			novaLinha[3] = fluxo.getMovimento().getPlano().getCliente().getCarro().getPlaca();
+			novaLinha[4] = fluxo.getMovimento().getPlano().getContrato().getValor();
 			novaLinha[5] = fluxo.getMovimento().getHr_entrada();
 			novaLinha[6] = fluxo.getMovimento().getHr_saida();
 

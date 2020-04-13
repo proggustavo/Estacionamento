@@ -9,11 +9,10 @@ import java.util.ArrayList;
 
 import model.banco.Banco;
 import model.banco.BaseDAO;
-import model.dao.movientos.PlanoDAO;
 import model.seletor.Seletor;
 import model.vo.cliente.ClienteVO;
 import model.vo.cliente.ContratoVO;
-import model.vo.movimentos.PlanoVO;
+import model.vo.cliente.PlanoVO;
 
 public class ContratoDAO implements BaseDAO<ContratoVO> {
 
@@ -23,16 +22,6 @@ public class ContratoDAO implements BaseDAO<ContratoVO> {
 		try {
 
 			contrato.setId(result.getInt("idcontrato"));
-
-			int idPlano = result.getInt("idplano");
-			PlanoDAO planoDAO = new PlanoDAO();
-			PlanoVO planoVO = (PlanoVO) planoDAO.consultarPorId(idPlano);
-			contrato.setPlano(planoVO);
-
-			int idCliente = result.getInt("idcliente");
-			ClienteDAO clienteDAO = new ClienteDAO();
-			ClienteVO clienteVO = clienteDAO.consultarPorId(idCliente);
-			contrato.setCliente(clienteVO);
 
 			contrato.setNumeroCartao(result.getLong("n_cartao"));
 			contrato.setDtEntrada(result.getTimestamp("dt_entrada").toLocalDateTime());

@@ -2,8 +2,6 @@ package model.vo.cliente;
 
 import java.time.LocalDateTime;
 
-import model.vo.movimentos.PlanoVO;
-
 public class ContratoVO {
 	
 	private int id;
@@ -12,24 +10,17 @@ public class ContratoVO {
 	private LocalDateTime dtSaida;
 	private boolean ativo;
 	private double valor;
-	private ClienteVO cliente;
-	private PlanoVO plano;
-	
-	public ContratoVO(int id, long numeroCartao, LocalDateTime dtEntrada, LocalDateTime dtSaida, boolean ativo,
-			double valor, ClienteVO cliente, PlanoVO plano) {
-		super();
+
+	public ContratoVO(int id, long numeroCartao, LocalDateTime dtEntrada, LocalDateTime dtSaida, boolean ativo, double valor) {
 		this.id = id;
 		this.numeroCartao = numeroCartao;
 		this.dtEntrada = dtEntrada;
 		this.dtSaida = dtSaida;
 		this.ativo = ativo;
 		this.valor = valor;
-		this.cliente = cliente;
-		this.plano = plano;
 	}
 
 	public ContratoVO() {
-		super();
 	}
 
 	public int getId() {
@@ -80,31 +71,13 @@ public class ContratoVO {
 		this.valor = valor;
 	}
 
-	public ClienteVO getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(ClienteVO cliente) {
-		this.cliente = cliente;
-	}
-
-	public PlanoVO getPlano() {
-		return plano;
-	}
-
-	public void setPlano(PlanoVO plano) {
-		this.plano = plano;
-	}
-
 	@Override
 	public String toString() {
 		return "Nº Cartão: " + this.numeroCartao +
 				" - Hora de Entrada: " + this.dtEntrada +
 				" - Hora de Saída: " + this.dtSaida + 
 				" - Ativo?: " + this.ativo + 
-				" - R$: " + this.valor + 
-				" - Cliente: " + this.cliente.toString() + 
-				" - Plano: " + this.plano.toString();
+				" - R$: " + this.valor;
 	}
 
 }
