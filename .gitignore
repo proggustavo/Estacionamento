@@ -23,14 +23,12 @@
 hs_err_pid*
 
 # Configurations files and others
-.idea/*.xml
-.idea/*.iml
-.idea/.name
-Projeto/*.iml
 
 /.project
 /.classpath
 /bin/
 /settings/
-/target/
 lib/
+/.idea/
+/Projeto/Projeto.iml
+/Projeto/target/
