@@ -40,7 +40,7 @@ public class DadosCadastroView extends JPanel {
 	private MaskFormatter mfFone;
 
 	private ArrayList<CarroVO> linhas;
-	private Modificacoes modificacoes = new Modificacoes();
+	private final Modificacoes modificacoes = new Modificacoes();
 
 	/**
 	 * Inicia a Tela

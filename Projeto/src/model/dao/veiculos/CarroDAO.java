@@ -24,7 +24,7 @@ public class CarroDAO implements BaseDAO<CarroVO> {
 
 			int idModelo = result.getInt("idmodelo");
 			ModeloDAO modeloDAO = new ModeloDAO();
-			ModeloVO modelo = (ModeloVO) modeloDAO.consultarPorId(idModelo);
+			ModeloVO modelo = modeloDAO.consultarPorId(idModelo);
 
 //			int idCliente = result.getInt("idcliente");
 //			ClienteDAO clienteDAO = new ClienteDAO();
@@ -100,7 +100,7 @@ public class CarroDAO implements BaseDAO<CarroVO> {
 		try {
 			result = stmt.executeQuery(qry);
 			while (result.next()) {
-				CarroVO vo = (CarroVO) criarResultSet(result);
+				CarroVO vo = criarResultSet(result);
 				lista.add(vo);
 			}
 		} catch (SQLException e) {

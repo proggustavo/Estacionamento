@@ -45,12 +45,9 @@ public class Seletor {
 		if (this.placa !=null) {
 			return true;
 		}
-		if (this.cor != null) {
-			return true;
-		}
-		return false;
-		
-	}
+        return this.cor != null;
+
+    }
 	
 	public String criarFiltroPlanoContrato(String qry) {
 		
