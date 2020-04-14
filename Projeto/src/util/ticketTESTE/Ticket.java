@@ -91,7 +91,7 @@ public void print() {
   //Si quieres ver el dialogo de seleccionar impresora usalo
   //Solo mostrara las impresoras que soporte arreglo de bits
   PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-  PrintService printService[] = PrintServiceLookup.lookupPrintServices(flavor, pras);
+  PrintService[] printService = PrintServiceLookup.lookupPrintServices(flavor, pras);
   PrintService defaultService = PrintServiceLookup.lookupDefaultPrintService();
   PrintService service = ServiceUI.printDialog(null, 700, 200, printService, defaultService, flavor, pras);
     

@@ -39,7 +39,7 @@ public class MainView extends JFrame {
 		});
 	}
 
-	private JLayeredPane layeredPane;
+	private final JLayeredPane layeredPane;
 	private JMenuBar menuBar;
 	private JButton btnInicio;
 	private JButton btnCaixa;

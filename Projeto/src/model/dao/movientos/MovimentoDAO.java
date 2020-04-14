@@ -119,8 +119,7 @@ public class MovimentoDAO implements BaseDAO<MovimentoVO> {
 			System.out.println("SQL Message:" + e.getMessage());
 			System.out.println("SQL Cause:" + e.getCause());
 			System.out.println("SQL State:" + e.getSQLState());
-			;
-			System.out.println("/****************************************************************/");
+            System.out.println("/****************************************************************/");
 			System.out.println();
 		} finally {
 			Banco.closeResultSet(result);

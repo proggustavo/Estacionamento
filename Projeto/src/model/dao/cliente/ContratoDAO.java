@@ -39,9 +39,8 @@ public class ContratoDAO implements BaseDAO<ContratoVO> {
 			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
 			System.out.println();
-			;
 
-		}
+        }
 
 		return contrato;
 	}

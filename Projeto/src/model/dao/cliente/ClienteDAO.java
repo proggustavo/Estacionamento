@@ -47,9 +47,8 @@ public class ClienteDAO implements BaseDAO<ClienteVO> {
 			System.out.println("SQL Cause:" + e.getCause());
 			System.out.println("SQL State:" + e.getSQLState());
 			System.out.println("/****************************************************************/");
-			;
 
-		}
+        }
 
 		return cliente;
 	}
